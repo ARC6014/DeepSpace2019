@@ -28,22 +28,22 @@ public class Pathfinding extends Subsystem {
         // setDefaultCommand(new MySpecialCommand());
     }
 
-    public void pathfinding(double robotFrontalWidth) {
-        this.robotFrontalWidth = robotFrontalWidth;
-    }
-
-    // takes angle as reference from present forward direction, in cw direction, in degrees
-    public WayPoint[] newPath(double distance, double angle, int destinationID = 0) {
-        Waypoint[] waypoints = new Waypoint[] {
-                new Waypoint(0, 0, 0);
-                new Waypoint(sin(Pathfinder.d2r(angle)) * distance, cos(Pathfinder.d2r(angle)) * distance, Pathfinder.d2r(angle));
-        };
-
-        if (destinationID != 0) {
-            // Implement obstacles if needed
-        }
-
-    }
+//    public void pathfinding(double robotFrontalWidth) {
+//        this.robotFrontalWidth = robotFrontalWidth;
+//    }
+//
+//    // takes angle as reference from present forward direction, in cw direction, in degrees
+//    public WayPoint[] newPath(double distance, double angle, int destinationID = 0) {
+//        Waypoint[] waypoints = new Waypoint[] {
+//                new Waypoint(0, 0, 0);
+//                new Waypoint(sin(Pathfinder.d2r(angle)) * distance, cos(Pathfinder.d2r(angle)) * distance, Pathfinder.d2r(angle));
+//        };
+//
+//        if (destinationID != 0) {
+//            // Implement obstacles if needed
+//        }
+//
+//    }
 
     private double robotFrontalWidth;
 }
