@@ -17,15 +17,17 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  */
 public class Elevator extends PIDSubsystem {
   private double outPID = 0;
-  private final double chainPitch = 0.25;
-  private final double sprocketTeeth = 22;
-  private final double outputRatio = 2.5;
-  private final double encoderPPR = 2048;
-  private final double baseHeight = 30; //Measure base height from the ground to the elevator.
 
-  Encoder elevatorEncoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB, false, Encoder.EncodingType.k4X);
   VictorSPX elevatorRightMotor = new VictorSPX(RobotMap.elevatorRightMotor);
   VictorSPX elevatorLeftMotor = new VictorSPX(RobotMap.elevatorLeftMotor);
+
+  Encoder elevatorEncoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB, false, Encoder.EncodingType.k4X);
+
+  private final double chainPitch = 0.250 * 2.54;
+  private final int sprocketTeeth = 22;
+  private final double outputRatio = 2.5;
+  private final int encoderCPR = 2048 * 4; //Check the encoder values
+  private final double baseHeight = 30; //Measure base height from the ground to the elevator.
 
 
   public Elevator() {
@@ -38,26 +40,34 @@ public class Elevator extends PIDSubsystem {
   @Override
   public void initDefaultCommand() { }
 
-  @Override
-  public double returnPIDInput() {
-    return elevatorHeight_cm();
+
+
+  public void reset() {
+    elevatorEncoder.reset();
   }
+
+  public double getEncoderRev() {
+    return elevatorEncoder.get() / (double)encoderCPR;
+  }
+
+  public double elevatorHeight_cm() {
+    return baseHeight + (getEncoderRev() / outputRatio) * sprocketTeeth * chainPitch * 2;
+  }
+
+
 
   public void setHeight(double height_cm) {
     this.setSetpoint(height_cm);
   }
 
   @Override
+  public double returnPIDInput() {
+    return elevatorHeight_cm();
+  }
+
+  @Override
   public void usePIDOutput(double output) {
     this.outPID = output;
-  }
-
-  public double elevatorHeight_cm() {
-    return baseHeight + (elevatorEncoder.get()/encoderPPR) / outputRatio * sprocketTeeth * chainPitch * 2.54 * 2;
-  }
-
-  public void reset() {
-    elevatorEncoder.reset();
   }
 
 }
