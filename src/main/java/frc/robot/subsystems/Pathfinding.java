@@ -19,19 +19,16 @@ import jaci.pathfinder.modifiers.TankModifier;
  * An example subsystem.  You can replace me with your own Subsystem.
  */
 public class Pathfinding extends Subsystem {
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+    private final double robotFrontalWidth=0.6;
+    //TODO ask for actual value of width
 
     @Override
-    public void pathfinding() {
+    public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
 
-//    public void pathfinding(double robotFrontalWidth) {
-//        this.robotFrontalWidth = robotFrontalWidth;
-//    }
-//
+
 //    // takes angle as reference from present forward direction, in cw direction, in degrees
 //    public WayPoint[] newPath(double distance, double angle, int destinationID = 0) {
 //        Waypoint[] waypoints = new Waypoint[] {
@@ -44,6 +41,4 @@ public class Pathfinding extends Subsystem {
 //        }
 //
 //    }
-
-    private double robotFrontalWidth;
 }
