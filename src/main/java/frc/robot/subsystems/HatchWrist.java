@@ -7,18 +7,24 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
  */
 public class HatchWrist extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+
+  VictorSPX hatchWristMotor = new VictorSPX(RobotMap.hatchWristMotor);
+  DigitalInput hatchWristBottomSwitch = new DigitalInput(RobotMap.hatchWristBottomSwitch);
 
   @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+  public void initDefaultCommand() { }
+
+  public boolean getSwitchStatus() {
+    return hatchWristBottomSwitch.get();
   }
+
 }
