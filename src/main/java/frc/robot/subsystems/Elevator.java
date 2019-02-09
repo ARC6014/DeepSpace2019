@@ -18,10 +18,10 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 public class Elevator extends PIDSubsystem {
   private double outPID = 0;
   private final double chainPitch = 0.25;
-  private final double driveTeeth = 22;
-  private final double drivenTeeth = 22;
+  private final double sprocketTeeth = 22;
   private final double outputRatio = 2.5;
   private final double encoderPPR = 2048;
+  private final double baseHeight = 30; //Measure base height from the ground to the elevator.
 
   Encoder elevatorEncoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB, false, Encoder.EncodingType.k4X);
   VictorSPX elevatorRightMotor = new VictorSPX(RobotMap.elevatorRightMotor);
@@ -31,9 +31,7 @@ public class Elevator extends PIDSubsystem {
   public Elevator() {
     super(0,0,0);
     setAbsoluteTolerance(1);
-    getPIDController().setInputRange(0,100);
     getPIDController().setOutputRange(-1,1);
-
     elevatorLeftMotor.follow(elevatorRightMotor);
   }
 
@@ -42,7 +40,11 @@ public class Elevator extends PIDSubsystem {
 
   @Override
   public double returnPIDInput() {
-    return encoderValue_cm();
+    return elevatorHeight_cm();
+  }
+
+  public void setHeight(double height_cm) {
+    this.setSetpoint(height_cm);
   }
 
   @Override
@@ -50,13 +52,15 @@ public class Elevator extends PIDSubsystem {
     this.outPID = output;
   }
 
-  public double encoderValue_cm() {
-    return (elevatorEncoder.get()/encoderPPR) / outputRatio * (drivenTeeth/driveTeeth) * chainPitch * 2.54;
+  public double elevatorHeight_cm() {
+    return baseHeight + (elevatorEncoder.get()/encoderPPR) / outputRatio * sprocketTeeth * chainPitch * 2.54 * 2;
   }
 
   public void reset() {
     elevatorEncoder.reset();
   }
+
+  public void
 
 
 }
