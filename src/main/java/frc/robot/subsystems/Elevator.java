@@ -60,7 +60,4 @@ public class Elevator extends PIDSubsystem {
     elevatorEncoder.reset();
   }
 
-  public void
-
-
 }
