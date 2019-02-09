@@ -9,7 +9,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import com.kauailabs.navx.frc.AHRS;
 import frc.robot.RobotMap;
@@ -19,15 +18,21 @@ import frc.robot.RobotMap;
  */
 public class Drive extends PIDSubsystem {
   private double outPID = 0;
-  AHRS mxp = new AHRS(SPI.Port.kMXP);
 
-  VictorSPX driveRearRightMotor = new VictorSPX(RobotMap.driveRearRightMotor);
+  AHRS navx = new AHRS(RobotMap.navx);
+
   VictorSPX driveFrontRightMotor = new VictorSPX(RobotMap.driveFrontRightMotor);
-  VictorSPX driveRearLeftMotor = new VictorSPX(RobotMap.driveRearLeftMotor);
+  VictorSPX driveRearRightMotor = new VictorSPX(RobotMap.driveRearRightMotor);
   VictorSPX driveFrontLeftMotor = new VictorSPX(RobotMap.driveFrontLeftMotor);
+  VictorSPX driveRearLeftMotor = new VictorSPX(RobotMap.driveRearLeftMotor);
 
   Encoder driveRightEncoder = new Encoder(RobotMap.driveRightEncoderA, RobotMap.driveRightEncoderB, false, Encoder.EncodingType.k4X);
   Encoder driveLeftEncoder = new Encoder(RobotMap.driveLeftEncoderA, RobotMap.driveLeftEncoderB, false, Encoder.EncodingType.k4X);
+
+  private final int leftEncoderCPR = 2048 * 4;  //Check the encoder values
+  private final int rightEncoderCPR = 2048 * 4; //Check the encoder values
+  private final double wheelDiameter = 4 * 2.54;
+
 
   public Drive() {
     super(0,0,0);
@@ -40,20 +45,51 @@ public class Drive extends PIDSubsystem {
   @Override
   public void initDefaultCommand() { }
 
+
   public double getHeading() {
-    return mxp.getYaw();
+    return navx.getYaw();
   }
-  public void reset() {
-    mxp.reset();
+
+  public void resetnavx() {
+    navx.reset();
+  }
+
+  public void resetEncoders() {
+    driveLeftEncoder.reset();
+    driveRightEncoder.reset();
+    driveRearRightMotor.follow(driveFrontRightMotor);
+    driveRearLeftMotor.follow(driveFrontLeftMotor);
+  }
+
+  public double getRightEncoderRev() {
+    return driveRightEncoder.get() / (double)rightEncoderCPR;
+  }
+
+  public double getLeftEncoderRev() {
+    return driveLeftEncoder.get() / (double)leftEncoderCPR;
+  }
+
+  public double getRightDistance() {
+    return getRightEncoderRev() * wheelDiameter * Math.PI;
+  }
+
+  public double getLeftDistance() {
+    return getLeftEncoderRev() * wheelDiameter * Math.PI;
+  }
+
+
+  public void setAngle(double angle) {
+    this.setSetpoint(angle);
   }
 
   @Override
   public double returnPIDInput() {
-   return getHeading();
+    return getHeading();
   }
 
   @Override
   public void usePIDOutput(double output) {
     this.outPID = output;
   }
+
 }
