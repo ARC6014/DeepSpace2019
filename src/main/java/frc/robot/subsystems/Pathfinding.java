@@ -28,18 +28,13 @@ public class Pathfinding extends Subsystem {
         // setDefaultCommand(new MySpecialCommand());
     }
 
-    //Set the width between the two sides' wheels
-    public void setRobotWidth(double robotFrontalWidth) {
-        this.robotFrontalWidth = robotFrontalWidth;
-    }
-
     // takes angle as reference from present forward direction, in cw direction, in degrees
-    public Trajectory[] newPath(double distance, double angle) {
+    public Trajectory newPath(double distance, double angle) {
         return newPath(distance, angle, 0);
     }
 
 
-    public Trajectory[] newPath(double distance, double angle, int destinationID) {
+    public Trajectory newPath(double distance, double angle, int destinationID) {
         Waypoint[] waypoints = new Waypoint[] {
                 new Waypoint(0, 0, 0),
                 new Waypoint(Math.sin(Pathfinder.d2r(angle)) * distance, Math.cos(Pathfinder.d2r(angle)) * distance, Pathfinder.d2r(angle))
@@ -49,21 +44,13 @@ public class Pathfinding extends Subsystem {
             // Implement obstacles if needed
         }
 
-        // Third variable movement time interval, max vel., acc., and jerk are 4-6, respectively; input
+        // Third variable movement time interval, max vel., acc., and jerk are 4-6, respectively; TODO
         Trajectory.Config configuration = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.1, 1, 1, 1);
 
         Trajectory path =  Pathfinder.generate(waypoints, configuration);
 
-        TankModifier modifier = new TankModifier(path).modify(robotFrontalWidth);
-
-        Trajectory[] trajectories = new Trajectory[] {
-                modifier.getLeftTrajectory(),
-                modifier.getRightTrajectory()
-        };
-
-        return trajectories;
+        return path;
 
     }
 
-    private double robotFrontalWidth = 0; // Defaults to 0
 }
