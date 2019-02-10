@@ -54,6 +54,12 @@ public class Drive extends PIDSubsystem {
   @Override
   public void initDefaultCommand() { }
 
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("DriveRight", driveFrontRightMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("DriveLeft", driveFrontLeftMotor.getMotorOutputPercent());
+  }
+
 
   public double getHeading() {
     return navx.getYaw();
@@ -86,18 +92,23 @@ public class Drive extends PIDSubsystem {
   }
 
 
+
   public void setAngle(double angle) {
     this.setSetpoint(angle);
   }
 
   @Override
-  public double returnPIDInput() {
+  protected double returnPIDInput() {
     return getHeading();
   }
 
   @Override
-  public void usePIDOutput(double output) {
+  protected void usePIDOutput(double output) {
     this.outPID = output;
+  }
+
+  public void PIDDrive(double speed) {
+    arcadeDrive(speed, outPID);
   }
 
 
@@ -119,8 +130,8 @@ public class Drive extends PIDSubsystem {
   public void tankDrive(double rightSpeed, double leftSpeed) {
     driveFrontRightMotor.set(ControlMode.PercentOutput, rightSpeed*maxSpeed);
     driveFrontLeftMotor.set(ControlMode.PercentOutput, leftSpeed*maxSpeed);
-    SmartDashboard.putNumber("DriveRight", rightSpeed * maxSpeed);
-    SmartDashboard.putNumber("DriveLeft", leftSpeed * maxSpeed);
+    //SmartDashboard.putNumber("DriveRight", rightSpeed * maxSpeed);
+    //SmartDashboard.putNumber("DriveLeft", leftSpeed * maxSpeed);
   }
 
   public void arcadeDrive(double speed, double rotation) {
@@ -147,7 +158,7 @@ public class Drive extends PIDSubsystem {
     }
     driveFrontRightMotor.set(ControlMode.PercentOutput, limit(right) * maxSpeed);
     driveFrontLeftMotor.set(ControlMode.PercentOutput, limit(left) * maxSpeed);
-    SmartDashboard.putNumber("DriveRight", limit(right) * maxSpeed);
-    SmartDashboard.putNumber("DriveLeft", limit(left) * maxSpeed);
+    //SmartDashboard.putNumber("DriveRight", limit(right) * maxSpeed);
+    //SmartDashboard.putNumber("DriveLeft", limit(left) * maxSpeed);
   }
 }

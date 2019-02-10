@@ -7,9 +7,11 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 /**
@@ -23,8 +25,17 @@ public class HatchWrist extends Subsystem {
   @Override
   public void initDefaultCommand() { }
 
+  @Override
+  public void periodic() {
+    SmartDashboard.putBoolean("HatchIntakeDown", getSwitchStatus());
+  }
+
   public boolean getSwitchStatus() {
     return hatchWristBottomSwitch.get();
+  }
+
+  public void setHatchWristSpeed(double speed) {
+    hatchWristMotor.set(ControlMode.PercentOutput, speed);
   }
 
 }

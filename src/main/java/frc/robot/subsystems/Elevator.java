@@ -7,7 +7,9 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
@@ -27,12 +29,14 @@ public class Elevator extends PIDSubsystem {
   private final int sprocketTeeth = 22;
   private final double outputRatio = 2.5;
   private final int encoderCPR = 2048 * 4; //Check the encoder values
-  private final double baseHeight = 30; //Measure base height from the ground to the elevator.
+  private final double baseToIntakeHeight = 30; //Measure base height from the ground to the elevator.
+  private final double maxheight = 196; //Check
 
 
   public Elevator() {
     super(0,0,0);
     setAbsoluteTolerance(1);
+    getPIDController().setInputRange(baseToIntakeHeight,maxheight);
     getPIDController().setOutputRange(-1,1);
     elevatorLeftMotor.follow(elevatorRightMotor);
   }
@@ -40,7 +44,10 @@ public class Elevator extends PIDSubsystem {
   @Override
   public void initDefaultCommand() { }
 
-
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("ElevatorHeight", elevatorHeight_cm());
+  }
 
   public void reset() {
     elevatorEncoder.reset();
@@ -51,7 +58,7 @@ public class Elevator extends PIDSubsystem {
   }
 
   public double elevatorHeight_cm() {
-    return baseHeight + (getEncoderRev() / outputRatio) * sprocketTeeth * chainPitch * 2;
+    return baseToIntakeHeight + (getEncoderRev() / outputRatio) * sprocketTeeth * chainPitch * 2;
   }
 
 
@@ -61,13 +68,21 @@ public class Elevator extends PIDSubsystem {
   }
 
   @Override
-  public double returnPIDInput() {
+  protected double returnPIDInput() {
     return elevatorHeight_cm();
   }
 
   @Override
-  public void usePIDOutput(double output) {
+  protected void usePIDOutput(double output) {
     this.outPID = output;
+  }
+
+  public void PIDLift() {
+    setElevatorSpeed(outPID);
+  }
+
+  public void setElevatorSpeed(double speed) {
+    elevatorRightMotor.set(ControlMode.PercentOutput, speed);
   }
 
 }
