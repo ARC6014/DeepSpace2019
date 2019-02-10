@@ -7,10 +7,12 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 /**
@@ -33,6 +35,7 @@ public class Drive extends PIDSubsystem {
   private final int rightEncoderCPR = 2048 * 4; //Check the encoder values
   private final double wheelDiameter = 4 * 2.54;
 
+  private double maxSpeed = 0.5;
 
   public Drive() {
     super(0,0,0);
@@ -40,6 +43,12 @@ public class Drive extends PIDSubsystem {
     getPIDController().setInputRange(180.0,-180.0);
     getPIDController().setOutputRange(-1,1);
     getPIDController().setContinuous(true);
+
+    driveFrontRightMotor.setInverted(true);
+    driveRearRightMotor.setInverted(true);
+
+    driveRearRightMotor.follow(driveFrontRightMotor);
+    driveRearLeftMotor.follow(driveFrontLeftMotor);
   }
 
   @Override
@@ -57,9 +66,8 @@ public class Drive extends PIDSubsystem {
   public void resetEncoders() {
     driveLeftEncoder.reset();
     driveRightEncoder.reset();
-    driveRearRightMotor.follow(driveFrontRightMotor);
-    driveRearLeftMotor.follow(driveFrontLeftMotor);
   }
+
 
   public double getRightEncoderRev() {
     return driveRightEncoder.get() / (double)rightEncoderCPR;
@@ -92,4 +100,54 @@ public class Drive extends PIDSubsystem {
     this.outPID = output;
   }
 
+
+
+  public void setMaxSpeed (double speed) {
+    maxSpeed = speed;
+  }
+
+  private double limit(double speed) {
+    if (speed >= 1.0) {
+      return 1.0;
+    }
+    if (speed <= -1.0) {
+      return -1.0;
+    }
+    return speed;
+  }
+
+  public void tankDrive(double rightSpeed, double leftSpeed) {
+    driveFrontRightMotor.set(ControlMode.PercentOutput, rightSpeed*maxSpeed);
+    driveFrontLeftMotor.set(ControlMode.PercentOutput, leftSpeed*maxSpeed);
+    SmartDashboard.putNumber("DriveRight", rightSpeed * maxSpeed);
+    SmartDashboard.putNumber("DriveLeft", leftSpeed * maxSpeed);
+  }
+
+  public void arcadeDrive(double speed, double rotation) {
+   double left, right;
+   double maxInput = Math.copySign(Math.max(Math.abs(speed), Math.abs(rotation)), speed);
+    if (speed >= 0.0) {
+
+      if (rotation >= 0.0) {
+        left = maxInput;
+        right = speed - rotation;
+      } else {
+        left = speed + rotation;
+        right = maxInput;
+      }
+    } else {
+
+      if (rotation >= 0.0) {
+        left = speed + rotation;
+        right = maxInput;
+      } else {
+        left = maxInput;
+        right = speed - rotation;
+      }
+    }
+    driveFrontRightMotor.set(ControlMode.PercentOutput, limit(right) * maxSpeed);
+    driveFrontLeftMotor.set(ControlMode.PercentOutput, limit(left) * maxSpeed);
+    SmartDashboard.putNumber("DriveRight", limit(right) * maxSpeed);
+    SmartDashboard.putNumber("DriveLeft", limit(left) * maxSpeed);
+  }
 }
