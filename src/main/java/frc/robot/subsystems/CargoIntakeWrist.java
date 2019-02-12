@@ -7,18 +7,84 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.RobotMap;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
  */
-public class CargoIntakeWrist extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+public class CargoIntakeWrist extends PIDSubsystem {
+  double outPID = 0;
+
+  VictorSPX cargoIntakeWristMotor = new VictorSPX(RobotMap.cargoIntakeWristMotor);
+
+  Encoder cargoIntakeWristEncoder = new Encoder(RobotMap.cargoIntakeWristEncoderA, RobotMap.cargoIntakeWristEncoderB, false, Encoder.EncodingType.k4X);
+  DigitalInput cargoIntakeWristBottomSwitch = new DigitalInput(RobotMap.cargoIntakeWristBottomSwitch);
+
+  double maxWristAngle = 130;
+  private final int encoderCPR = 2048 * 4;
+  private final double outputRatio = 5.0;
+
+  public CargoIntakeWrist() {
+    super(0,0,0);
+    setAbsoluteTolerance(1);
+    getPIDController().setInputRange(0,maxWristAngle);
+    getPIDController().setOutputRange(-1,1);
+  }
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+  }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("CargoWristMotor", cargoIntakeWristMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("WristAngle", getWristAngle());
+    SmartDashboard.putBoolean("CargoIntakeParallel", getCargoSwitchStatus());
+  }
+
+  public void reset() {
+    cargoIntakeWristEncoder.reset();
+  }
+
+  public double getEncoderRev() {
+    return cargoIntakeWristEncoder.get() / (double)encoderCPR;
+  }
+
+  public double getWristAngle() {
+    return getEncoderRev() / outputRatio * 360;
+  }
+
+  public boolean getCargoSwitchStatus() {
+    return cargoIntakeWristBottomSwitch.get();
+  }
+
+
+
+  @Override
+  protected double returnPIDInput() {
+    return getWristAngle();
+  }
+
+  @Override
+  public void usePIDOutput(double output) {
+    this.outPID = output;
+  }
+
+  public void setWristAngle(double angle) {
+    this.setSetpoint(angle);
+  }
+
+  public void PIDRotate() {
+    setWristSpeed(outPID);
+  }
+
+  public void setWristSpeed(double speed) {
+    cargoIntakeWristMotor.set(ControlMode.PercentOutput, outPID);
   }
 }
