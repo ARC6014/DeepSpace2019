@@ -14,6 +14,8 @@ import jaci.pathfinder.followers.EncoderFollower;
 public class SemiAutoDrive extends Command{
     public SemiAutoDrive() {
         // Use requires() here to declare subsystem dependencies
+        requires(Robot.pathfinding);
+        requires(Robot.drive);
     }
 
     // Called just before this Command runs the first time
