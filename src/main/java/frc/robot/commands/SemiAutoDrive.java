@@ -20,13 +20,9 @@ public class SemiAutoDrive extends Command{
     @Override
     protected void initialize() {
 
-        //TODO: Integrate Pathfinding and Drive objects
-        Pathfinding = new Pathfinding();
-        Drive = new Drive();
-
         double distance = 0.0, angle = 0.0; //TODO: Implement vision integration
 
-        Trajectory path = Pathfinding.newPath(distance, angle);
+        Trajectory path = Robot.pathfinding.newPath(distance, angle);
 
         TankModifier modifier = new TankModifier(path).modify(robotFrontalWidth);
 
@@ -35,12 +31,11 @@ public class SemiAutoDrive extends Command{
                 modifier.getRightTrajectory()
         };
 
-
         left = new EncoderFollower(modifier.getLeftTrajectory());
         right = new EncoderFollower(modifier.getRightTrajectory());
 
-        left.configureEncoder((int) (Drive.getLeftEncoderRev()*encoderTicksPerRev), encoderTicksPerRev, wheelDiameter);
-        right.configureEncoder((int) (Drive.getRightEncoderRev()*encoderTicksPerRev), encoderTicksPerRev, wheelDiameter);
+        left.configureEncoder((int) (Robot.drive.getLeftEncoderRev()*encoderTicksPerRev), encoderTicksPerRev, wheelDiameter);
+        right.configureEncoder((int) (Robot.drive.getRightEncoderRev()*encoderTicksPerRev), encoderTicksPerRev, wheelDiameter);
 
         left.configurePIDVA(1.0, 0.0, 0.0, 1/maxV, 0);
         right.configurePIDVA(1.0, 0.0, 0.0, 1/maxV, 0);
@@ -51,17 +46,17 @@ public class SemiAutoDrive extends Command{
     @Override
     protected void execute() {
         //TO PROCESS
-        double outputLeft = left.calculate((int) (encoderTicksPerRev*Drive.getLeftEncoderRev()));
-        double outputRight = right.calculate((int) (encoderTicksPerRev*Drive.getRightEncoderRev()));
-        Drive.tankDrive(outputRight, outputLeft);
+        double outputLeft = left.calculate((int) (encoderTicksPerRev*Robot.drive.getLeftEncoderRev()));
+        double outputRight = right.calculate((int) (encoderTicksPerRev*Robot.drive.getRightEncoderRev()));
+        Robot.drive.tankDrive(outputRight, outputLeft);
 
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        //TODO
-        return false;
+        double distance = 0.0; //TODO:ADD DISTANCE MEASUREMENT
+        return distance == 0.0;
     }
 
     // Called once after isFinished returns true
@@ -75,8 +70,6 @@ public class SemiAutoDrive extends Command{
         end();
     }
 
-    Pathfinding Pathfinding; //TODO
-    Drive Drive; //TODO
     EncoderFollower left, right;
     final double robotFrontalWidth = 0.0; //TODO: SET WIDTH
     final double maxV = 0.0; //TODO: SET MAX VELOCITY

@@ -29,6 +29,7 @@ public class Robot extends TimedRobot {
   public static Elevator elevator = new Elevator();
   public static HatchWrist hatchWrist = new HatchWrist();
   public static OI m_oi;
+  public static Pathfinding pathfinding = new Pathfinding();
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
