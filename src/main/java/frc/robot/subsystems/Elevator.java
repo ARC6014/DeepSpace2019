@@ -30,13 +30,13 @@ public class Elevator extends PIDSubsystem {
   private final double outputRatio = 2.5;
   private final int encoderCPR = 2048 * 4; //Check the encoder values
   private final double baseToIntakeHeight = 30; //Measure base height from the ground to the elevator.
-  private final double maxheight = 196; //Check
+  private final double maxHeight = 196; //Check
 
 
   public Elevator() {
     super(0,0,0);
     setAbsoluteTolerance(1);
-    getPIDController().setInputRange(baseToIntakeHeight,maxheight);
+    getPIDController().setInputRange(baseToIntakeHeight,maxHeight);
     getPIDController().setOutputRange(-1,1);
     elevatorLeftMotor.follow(elevatorRightMotor);
   }
@@ -46,7 +46,8 @@ public class Elevator extends PIDSubsystem {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("ElevatorHeight", elevatorHeight_cm());
+    SmartDashboard.putNumber("ElevatorHeight", elevatorHeightCm());
+    SmartDashboard.putNumber("ElevatorMotor",elevatorRightMotor.getMotorOutputPercent());
   }
 
   public void reset() {
@@ -57,19 +58,19 @@ public class Elevator extends PIDSubsystem {
     return elevatorEncoder.get() / (double)encoderCPR;
   }
 
-  public double elevatorHeight_cm() {
+  public double elevatorHeightCm() {
     return baseToIntakeHeight + (getEncoderRev() / outputRatio) * sprocketTeeth * chainPitch * 2;
   }
 
 
 
-  public void setHeight(double height_cm) {
-    this.setSetpoint(height_cm);
+  public void setHeight(double heightCm) {
+    this.setSetpoint(heightCm);
   }
 
   @Override
   protected double returnPIDInput() {
-    return elevatorHeight_cm();
+    return elevatorHeightCm();
   }
 
   @Override

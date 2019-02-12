@@ -40,7 +40,7 @@ public class Drive extends PIDSubsystem {
   public Drive() {
     super(0,0,0);
     setAbsoluteTolerance(5);
-    getPIDController().setInputRange(180.0,-180.0);
+    getPIDController().setInputRange(-180.0,180.0);
     getPIDController().setOutputRange(-1,1);
     getPIDController().setContinuous(true);
 
@@ -56,8 +56,12 @@ public class Drive extends PIDSubsystem {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("DriveRight", driveFrontRightMotor.getMotorOutputPercent());
-    SmartDashboard.putNumber("DriveLeft", driveFrontLeftMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("DriveRightMotor", driveFrontRightMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("DriveLeftMotor", driveFrontLeftMotor.getMotorOutputPercent());
+
+    SmartDashboard.putNumber("Heading",getHeading());
+    SmartDashboard.putNumber("RightEncoderDistance",getRightDistance());
+    SmartDashboard.putNumber("LeftEncoderDistance",getLeftDistance());
   }
 
 
@@ -65,7 +69,7 @@ public class Drive extends PIDSubsystem {
     return navx.getYaw();
   }
 
-  public void resetnavx() {
+  public void resetNavx() {
     navx.reset();
   }
 
@@ -147,7 +151,6 @@ public class Drive extends PIDSubsystem {
         right = maxInput;
       }
     } else {
-
       if (rotation >= 0.0) {
         left = speed + rotation;
         right = maxInput;
@@ -158,7 +161,5 @@ public class Drive extends PIDSubsystem {
     }
     driveFrontRightMotor.set(ControlMode.PercentOutput, limit(right) * maxSpeed);
     driveFrontLeftMotor.set(ControlMode.PercentOutput, limit(left) * maxSpeed);
-    //SmartDashboard.putNumber("DriveRight", limit(right) * maxSpeed);
-    //SmartDashboard.putNumber("DriveLeft", limit(left) * maxSpeed);
   }
 }

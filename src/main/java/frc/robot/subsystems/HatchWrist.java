@@ -28,6 +28,7 @@ public class HatchWrist extends Subsystem {
   @Override
   public void periodic() {
     SmartDashboard.putBoolean("HatchIntakeDown", getSwitchStatus());
+    SmartDashboard.putNumber("HatchWristMotor",hatchWristMotor.getMotorOutputPercent());
   }
 
   public boolean getSwitchStatus() {
