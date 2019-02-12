@@ -24,7 +24,7 @@ public class SemiAutoDrive extends Command{
 
         double distance = 0.0, angle = 0.0; //TODO: Implement vision integration
 
-        Trajectory path = Robot.pathfinding.newPath(distance, angle);
+        Trajectory path = Robot.pathfinding.newSimplePath(distance, angle);
 
         TankModifier modifier = new TankModifier(path).modify(robotFrontalWidth);
 
@@ -39,8 +39,8 @@ public class SemiAutoDrive extends Command{
         left.configureEncoder((int) (Robot.drive.getLeftEncoderRev()*encoderTicksPerRev), encoderTicksPerRev, wheelDiameter);
         right.configureEncoder((int) (Robot.drive.getRightEncoderRev()*encoderTicksPerRev), encoderTicksPerRev, wheelDiameter);
 
-        left.configurePIDVA(1.0, 0.0, 0.0, 1/maxV, 0);
-        right.configurePIDVA(1.0, 0.0, 0.0, 1/maxV, 0);
+        left.configurePIDVA(1.0, 0.0, 0.0, 1/maxV, 0); //TODO: Implement PIDVA
+        right.configurePIDVA(1.0, 0.0, 0.0, 1/maxV, 0); //TODO: Implement PIDVA
 
     }
 

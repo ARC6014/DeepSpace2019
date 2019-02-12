@@ -31,12 +31,12 @@ public class Pathfinding extends Subsystem {
     }
 
     // takes angle as reference from present forward direction, in cw direction, in degrees
-    public Trajectory newPath(double distance, double angle) {
-        return newPath(distance, angle, 0);
+    public Trajectory newSimplePath(double distance, double angle) {
+        return newSimplePath(distance, angle, 0);
     }
 
 
-    public Trajectory newPath(double distance, double angle, int destinationID) {
+    public Trajectory newSimplePath(double distance, double angle, int destinationID) {
         Waypoint[] waypoints = new Waypoint[] {
                 new Waypoint(0, 0, 0),
                 new Waypoint(Math.sin(Pathfinder.d2r(angle)) * distance, Math.cos(Pathfinder.d2r(angle)) * distance, Pathfinder.d2r(angle))
@@ -53,6 +53,14 @@ public class Pathfinding extends Subsystem {
 
         return path;
 
+    }
+
+    public Trajectory newComplexPath(Waypoint[] waypoints) {
+        Trajectory.Config configuration = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.1, 1, 1, 1);
+
+        Trajectory path =  Pathfinder.generate(waypoints, configuration);
+
+        return path;
     }
 
 }
