@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.Encoder;
@@ -20,10 +21,10 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 public class Elevator extends PIDSubsystem {
   private double outPID = 0;
 
-  VictorSPX elevatorRightMotor = new VictorSPX(RobotMap.elevatorRightMotor);
-  VictorSPX elevatorLeftMotor = new VictorSPX(RobotMap.elevatorLeftMotor);
+  VictorSPX elevatorMotor = new VictorSPX(RobotMap.elevatorMotor);
 
   Encoder elevatorEncoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB, false, Encoder.EncodingType.k4X);
+  DigitalInput elevatorBottomSwitch = new DigitalInput(RobotMap.elevatorBottomSwitch);
 
   private final double chainPitch = 0.250 * 2.54;
   private final int sprocketTeeth = 22;
@@ -38,7 +39,6 @@ public class Elevator extends PIDSubsystem {
     setAbsoluteTolerance(1);
     getPIDController().setInputRange(baseToIntakeHeight,maxHeight);
     getPIDController().setOutputRange(-1,1);
-    elevatorLeftMotor.follow(elevatorRightMotor);
   }
 
   @Override
@@ -47,10 +47,10 @@ public class Elevator extends PIDSubsystem {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("ElevatorHeight", elevatorHeightCm());
-    SmartDashboard.putNumber("ElevatorMotor",elevatorRightMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("ElevatorMotor",elevatorMotor.getMotorOutputPercent());
   }
 
-  public void reset() {
+  public void resetEncoder() {
     elevatorEncoder.reset();
   }
 
@@ -61,8 +61,6 @@ public class Elevator extends PIDSubsystem {
   public double elevatorHeightCm() {
     return baseToIntakeHeight + (getEncoderRev() / outputRatio) * sprocketTeeth * chainPitch * 2;
   }
-
-
 
   public void setHeight(double heightCm) {
     this.setSetpoint(heightCm);
@@ -83,7 +81,7 @@ public class Elevator extends PIDSubsystem {
   }
 
   public void setElevatorSpeed(double speed) {
-    elevatorRightMotor.set(ControlMode.PercentOutput, speed);
+    elevatorMotor.set(ControlMode.PercentOutput, speed);
   }
 
 }

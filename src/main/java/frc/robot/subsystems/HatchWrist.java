@@ -35,6 +35,8 @@ public class HatchWrist extends Subsystem {
     return hatchWristBottomSwitch.get();
   }
 
+  //resetEncoder
+
   public void setHatchWristSpeed(double speed) {
     hatchWristMotor.set(ControlMode.PercentOutput, speed);
   }
