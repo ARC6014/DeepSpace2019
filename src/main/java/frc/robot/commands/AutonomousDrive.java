@@ -24,10 +24,9 @@ public class AutonomousDrive extends Command {
     // 20X L, 21X R
     // 2{0/1}{0->3} moves front to back
     // objectID: 0 for HatchPanel, 1 for Sphere
-    public AutonomousDrive(int startPositionID, int targetID, int objectID) {
+    public AutonomousDrive(int startPositionID, int targetID) {
         this.start = startPositionID;
         this.target = targetID;
-        this.obj = objectID;
     }
 
     // Called just before this Command runs the first time
@@ -165,7 +164,7 @@ public class AutonomousDrive extends Command {
         end();
     }
 
-    int obj, start, target;
+    int start, target;
     EncoderFollower left, right;
     final double robotFrontalWidth = 0.0; //TODO: SET WIDTH
     final double maxV = 0.0; //TODO: SET MAX VELOCITY
