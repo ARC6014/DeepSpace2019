@@ -21,7 +21,8 @@ import frc.robot.RobotMap;
 public class CargoIntakeWrist extends PIDSubsystem {
   double outPID = 0;
 
-  VictorSPX cargoIntakeWristMotor = new VictorSPX(RobotMap.cargoIntakeWristMotor);
+  VictorSPX cargoIntakeWristLeftMotor = new VictorSPX(RobotMap.cargoIntakeWristLeftMotor);
+  VictorSPX cargoIntakeWristRightMotor = new VictorSPX(RobotMap.cargoIntakeWristRightMotor);
 
   Encoder cargoIntakeWristEncoder = new Encoder(RobotMap.cargoIntakeWristEncoderA, RobotMap.cargoIntakeWristEncoderB, false, Encoder.EncodingType.k4X);
   DigitalInput cargoIntakeWristBottomSwitch = new DigitalInput(RobotMap.cargoIntakeWristBottomSwitch);
@@ -35,6 +36,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
     setAbsoluteTolerance(1);
     getPIDController().setInputRange(0,maxWristAngle);
     getPIDController().setOutputRange(-1,1);
+    cargoIntakeWristLeftMotor.follow(cargoIntakeWristRightMotor);
   }
 
   @Override
@@ -43,12 +45,12 @@ public class CargoIntakeWrist extends PIDSubsystem {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("CargoWristMotor", cargoIntakeWristMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("CargoWristMotor", cargoIntakeWristRightMotor.getMotorOutputPercent());
     SmartDashboard.putNumber("WristAngle", getWristAngle());
     SmartDashboard.putBoolean("CargoIntakeParallel", getCargoSwitchStatus());
   }
 
-  public void reset() {
+  public void resetEncoder() {
     cargoIntakeWristEncoder.reset();
   }
 
@@ -87,10 +89,10 @@ public class CargoIntakeWrist extends PIDSubsystem {
   public void setWristSpeed(double speed) {
     if (speed < 0) {
       if (getWristAngle() < 5) {
-        cargoIntakeWristMotor.set(ControlMode.PercentOutput, Math.abs(getWristAngle()/5 - speed));
+        cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, Math.abs(getWristAngle()/5 - speed));
       }
     } else {
-      cargoIntakeWristMotor.set(ControlMode.PercentOutput, speed);
+      cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, speed);
     }
   }
 }
