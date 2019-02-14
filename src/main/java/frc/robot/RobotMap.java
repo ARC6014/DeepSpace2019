@@ -22,12 +22,12 @@ public class RobotMap {
     public static final int driveFrontRightMotor = 0;
     public static final int driveRearRightMotor = 0;
 
-    public static final int elevatorLeftMotor = 0;
-    public static final int elevatorRightMotor = 0;
+    public static final int elevatorMotor = 0;
 
     public static final int cargoIntakeMotor = 0;
 
-    public static final int cargoIntakeWristMotor = 0;
+    public static final int cargoIntakeWristRightMotor = 0;
+    public static final int cargoIntakeWristLeftMotor = 0;
 
     public static final int hatchWristMotor = 0;
     //DIO
@@ -38,12 +38,14 @@ public class RobotMap {
 
     public static final int elevatorEncoderA = 0;
     public static final int elevatorEncoderB = 0;
+    public static final int elevatorBottomSwitch = 0;
 
     public static final int cargoIntakeWristEncoderA = 0;
     public static final int cargoIntakeWristEncoderB = 0;
     public static final int cargoIntakeWristBottomSwitch = 0;
 
     public static final int hatchWristBottomSwitch = 0;
+    //Hatch Wrist Encoder
     //NavX
     public static final SPI.Port navx = SPI.Port.kMXP;
 }
