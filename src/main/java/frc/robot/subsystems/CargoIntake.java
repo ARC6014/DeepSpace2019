@@ -7,11 +7,12 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
-/**
- * An example subsystem.  You can replace me with your own Subsystem.
- */
+
 public class CargoIntake extends Subsystem {
     
 
@@ -22,4 +23,7 @@ public class CargoIntake extends Subsystem {
   public void initDefaultCommand() {
 
   }
+  public void setIntakeSpeed(double speed) {
+    cargoIntakeMotor.set(ControlMode.PercentOutput, speed);
+
 }
