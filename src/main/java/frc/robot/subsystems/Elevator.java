@@ -30,8 +30,8 @@ public class Elevator extends PIDSubsystem {
   private final int sprocketTeeth = 22;
   private final double outputRatio = 2.5;
   private final int encoderCPR = 2048 * 4; //Check the encoder values
-  private final double baseToIntakeHeight = 39.12; //Measure base height from the ground to the elevator.
-  private final double maxHeight = 194.05; //Check
+  public final double baseToIntakeHeight = 39.12; //Measure base height from the ground to the elevator.
+  public final double maxHeight = 194.05; //Check
 
 
   public Elevator() {
