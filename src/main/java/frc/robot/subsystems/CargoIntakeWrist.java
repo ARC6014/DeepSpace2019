@@ -88,7 +88,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
 
   public void setWristSpeed(double speed) {
     if (speed < 0 && getWristAngle() < 5) {
-      cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, Math.abs(getWristAngle()/5 * speed));
+      cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, getWristAngle()/5 * speed);
     } else {
       cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, speed);
     }
