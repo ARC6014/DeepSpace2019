@@ -7,7 +7,7 @@ import frc.robot.commands.AutoRotateIntakeWrist;
 
 public class RocketCargoL3 extends CommandGroup {
     private final double maxHeight = Robot.elevator.maxHeight;
-    private final double angle = 29;    //Check
+    private final double angle = 29.08;    //Check
 
     public RocketCargoL3() {
         addParallel(new AutoLiftElevator(maxHeight));
