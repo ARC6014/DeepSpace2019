@@ -36,6 +36,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
     setAbsoluteTolerance(1);
     getPIDController().setInputRange(0,maxWristAngle);
     getPIDController().setOutputRange(-1,1);
+    cargoIntakeWristLeftMotor.setInverted(true);
     cargoIntakeWristLeftMotor.follow(cargoIntakeWristRightMotor);
   }
 

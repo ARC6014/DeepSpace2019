@@ -14,40 +14,33 @@ import frc.robot.Robot;
 /**
  * An example command.  You can replace me with your own command.
  */
-public class AutoRotateIntakeWrist extends Command {
-    private double angle;
+public class LiftElevator extends Command {
+    private double height;
 
-    public AutoRotateIntakeWrist(double angle) {
-        this.angle = angle;
+    public LiftElevator(double height) {
+        this.height = height;
     }
 
     @Override
     protected void initialize() {
-        Robot.cargoIntakeWrist.enable();
-        Robot.cargoIntakeWrist.setWristAngle(angle);
+        Robot.elevator.setSetpoint(height);
     }
 
     @Override
     protected void execute() {
-        Robot.cargoIntakeWrist.PIDRotate();
+
     }
 
     @Override
     protected boolean isFinished() {
-        if (Robot.cargoIntakeWrist.onTarget()) {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
     @Override
     protected void end() {
-        Robot.cargoIntakeWrist.disable();
     }
 
     @Override
     protected void interrupted() {
-        Robot.cargoIntakeWrist.disable();
     }
 }
