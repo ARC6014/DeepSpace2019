@@ -26,7 +26,6 @@ public class Robot extends TimedRobot {
   public static CargoIntakeWrist cargoIntakeWrist = new CargoIntakeWrist();
   public static Drive drive = new Drive();
   public static Elevator elevator = new Elevator();
-  public static HatchWrist hatchWrist = new HatchWrist();
   public static OI m_oi;
   public static Pathfinding pathfinding = new Pathfinding();
 

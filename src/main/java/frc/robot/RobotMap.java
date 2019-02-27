@@ -29,7 +29,6 @@ public class RobotMap {
     public static final int cargoIntakeWristRightMotor = 0;
     public static final int cargoIntakeWristLeftMotor = 0;
 
-    public static final int hatchWristMotor = 0;
     //DIO
     public static final int driveLeftEncoderA = 0;
     public static final int driveLeftEncoderB = 0;
@@ -44,8 +43,6 @@ public class RobotMap {
     public static final int cargoIntakeWristEncoderB = 0;
     public static final int cargoIntakeWristBottomSwitch = 0;
 
-    public static final int hatchWristBottomSwitch = 0;
-    //Hatch Wrist Encoder
     //NavX
     public static final SPI.Port navx = SPI.Port.kMXP;
 }
