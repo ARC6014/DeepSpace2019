@@ -35,20 +35,19 @@ public class AutonomousDrive extends Command {
 
         Waypoint[] waypoints = new Waypoint [3];
 
-//TODO: CHECK UNITS
         Waypoint startWaypoint;
         if (start == 0) {
-            startWaypoint = new Waypoint(294.5, 167, 0);
+            startWaypoint = new Waypoint(2.945, 1.67, 0);
         } else if (start == 1) {
-            startWaypoint = new Waypoint(411.5, 167, 0);
+            startWaypoint = new Waypoint(4.115, 1.67, 0);
         } else if (start == 2) {
-            startWaypoint = new Waypoint(528.5, 167, 0);
+            startWaypoint = new Waypoint(5.285, 1.67, 0);
         } else if (start == 3) {
-            startWaypoint = new Waypoint(294.5, 61, 0);
+            startWaypoint = new Waypoint(2.945, 0.61, 0);
         } else if (start == 4) {
-            startWaypoint = new Waypoint(528.5, 61, 0);
+            startWaypoint = new Waypoint(5.285, 0.61, 0);
         } else if (start == 5) {
-            startWaypoint = new Waypoint(411.5, 61, 0);
+            startWaypoint = new Waypoint(4.115, 0.61, 0);
         } else {
             startWaypoint = new Waypoint(0,0,0); //ERROR
         }
@@ -57,11 +56,11 @@ public class AutonomousDrive extends Command {
         // TODO: Improve middleCheckpoint
         Waypoint middleCheckpoint;
         if (target == 200 || target == 210) {
-            middleCheckpoint = new Waypoint(411.5,411.5,0);
+            middleCheckpoint = new Waypoint(4.115,4.115,0);
         } else if ((0 <= target && target < 100) || (200 <= target && target < 210)) {
-            middleCheckpoint = new Waypoint(206,411.5,0);
+            middleCheckpoint = new Waypoint(2.06,4.115,0);
         } else if ((100 <= target && target < 200) || (210 <= target && target < 220)){
-            middleCheckpoint = new Waypoint(617,411.5,0);
+            middleCheckpoint = new Waypoint(6.17,4.115,0);
         } else {
             middleCheckpoint = new Waypoint(0,0,0); //ERROR
         }
@@ -70,46 +69,46 @@ public class AutonomousDrive extends Command {
         Waypoint finalWaypoint;
         switch(target) {
             case 0:
-                finalWaypoint = new Waypoint(35,541,330);
+                finalWaypoint = new Waypoint(0.35,5.41,330);
                 break;
             case 1:
-                finalWaypoint = new Waypoint(50,582,270);
+                finalWaypoint = new Waypoint(0.50,5.82,270);
                 break;
             case 2:
-                finalWaypoint = new Waypoint(35,623,210);
+                finalWaypoint = new Waypoint(35,6.23,210);
                 break;
             case 100:
-                finalWaypoint = new Waypoint(788,541,30);
+                finalWaypoint = new Waypoint(7.88,5.41,30);
                 break;
             case 101:
-                finalWaypoint = new Waypoint(773,582,90);
+                finalWaypoint = new Waypoint(7.73,5.82,90);
                 break;
             case 102:
-                finalWaypoint = new Waypoint(788,623,150);
+                finalWaypoint = new Waypoint(7.88,6.23,150);
                 break;
             case 200:
-                finalWaypoint = new Waypoint(384,559,0);
+                finalWaypoint = new Waypoint(3.84,5.59,0);
                 break;
             case 201:
-                finalWaypoint = new Waypoint(338,662,90);
+                finalWaypoint = new Waypoint(3.38,6.62,90);
                 break;
             case 202:
-                finalWaypoint = new Waypoint(338,717.5,90);
+                finalWaypoint = new Waypoint(3.38,7.175,90);
                 break;
             case 203:
-                finalWaypoint = new Waypoint(338,772.8,90);
+                finalWaypoint = new Waypoint(3.38,7.728,90);
                 break;
             case 210:
-                finalWaypoint = new Waypoint(439,559,0);
+                finalWaypoint = new Waypoint(4.39,5.59,0);
                 break;
             case 211:
-                finalWaypoint = new Waypoint(485,662,270);
+                finalWaypoint = new Waypoint(4.85,6.62,270);
                 break;
             case 212:
-                finalWaypoint = new Waypoint(485,717.5,270);
+                finalWaypoint = new Waypoint(4.85,7.175,270);
                 break;
             case 213:
-                finalWaypoint = new Waypoint(485,772.8,270);
+                finalWaypoint = new Waypoint(4.85,7.728,270);
                 break;
             default:
                 finalWaypoint = new Waypoint(0,0,0); //ERROR
