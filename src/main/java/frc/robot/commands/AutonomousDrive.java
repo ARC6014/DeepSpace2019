@@ -171,6 +171,6 @@ public class AutonomousDrive extends Command {
     final double robotFrontalWidth = 0.615909;
     final double maxV = 0.0; //TODO: SET MAX VELOCITY
     final int encoderTicksPerRev = 8192; //TODO: ENSURE THIS IS RIGHT
-    final double wheelDiameter = 0.0; //TODO
+    final double wheelDiameter = 0.1016;
 }
 
