@@ -129,8 +129,10 @@ public class AutonomousDrive extends Command {
         left = new EncoderFollower(modifier.getLeftTrajectory());
         right = new EncoderFollower(modifier.getRightTrajectory());
 
-        left.configureEncoder((int) (Robot.drive.getLeftEncoderRev()*encoderTicksPerRev), encoderTicksPerRev, wheelDiameter);
-        right.configureEncoder((int) (Robot.drive.getRightEncoderRev()*encoderTicksPerRev), encoderTicksPerRev, wheelDiameter);
+        left.configureEncoder((int) (Robot.drive.getLeftEncoderRev()*encoderTicksPerRev), encoderTicksPerRev,
+                wheelDiameter);
+        right.configureEncoder((int) (Robot.drive.getRightEncoderRev()*encoderTicksPerRev), encoderTicksPerRev,
+                wheelDiameter);
 
         left.configurePIDVA(1.0, 0.0, 0.0, 1/maxV, 0); //TODO: Implement PIDVA
         right.configurePIDVA(1.0, 0.0, 0.0, 1/maxV, 0); //TODO: Implement PIDVA
@@ -147,7 +149,7 @@ public class AutonomousDrive extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() { //TODO: ADD COMPLETION DETECTION; WHEN VISION DETECTED
+    protected boolean isFinished() { //TODO: ADD COMPLETION DETECTION; WHEN VISION DETECTED (OR OR)
         return false;
     }
 
@@ -168,7 +170,7 @@ public class AutonomousDrive extends Command {
     EncoderFollower left, right;
     final double robotFrontalWidth = 0.615909;
     final double maxV = 0.0; //TODO: SET MAX VELOCITY
-    final int encoderTicksPerRev = 0; //TODO
+    final int encoderTicksPerRev = 8192; //TODO: ENSURE THIS IS RIGHT
     final double wheelDiameter = 0.0; //TODO
 }
 
