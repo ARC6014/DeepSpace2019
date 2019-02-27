@@ -154,6 +154,7 @@ public class AutonomousDrive extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() { //TODO
+
     }
 
     // Called when another command which requires one or more of the same
@@ -165,7 +166,7 @@ public class AutonomousDrive extends Command {
 
     int start, target;
     EncoderFollower left, right;
-    final double robotFrontalWidth = 0.0; //TODO: SET WIDTH
+    final double robotFrontalWidth = 0.615909;
     final double maxV = 0.0; //TODO: SET MAX VELOCITY
     final int encoderTicksPerRev = 0; //TODO
     final double wheelDiameter = 0.0; //TODO
