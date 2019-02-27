@@ -132,4 +132,13 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
+
+
+
+     public static final double robotFrontalWidth = 0.615909;
+     public static final double maxV = 0.0; //TODO: SET MAX VELOCITY
+     public static final double maxA = 0.0; //TODO: SET MAX ACCELERATION
+     public static final double maxJ = 0.0; //TODO: SET MAX JERK
+     public static final int encoderTicksPerRev = 8192; //TODO: ENSURE THIS IS RIGHT
+     public static final double wheelDiameter = 0.1016;
 }

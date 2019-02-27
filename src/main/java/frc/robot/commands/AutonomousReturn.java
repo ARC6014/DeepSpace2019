@@ -81,8 +81,8 @@ public class AutonomousReturn extends Command {
 
     int target, start;
     EncoderFollower left, right;
-    final double robotFrontalWidth = 0.0; //TODO: SET WIDTH
-    final double maxV = 0.0; //TODO: SET MAX VELOCITY
-    final int encoderTicksPerRev = 0; //TODO
-    final double wheelDiameter = 0.0; //TODO
+    final double robotFrontalWidth = Robot.robotFrontalWidth;
+    final double maxV = Robot.maxV;
+    final int encoderTicksPerRev = Robot.encoderTicksPerRev;
+    final double wheelDiameter = Robot.wheelDiameter;
 }
