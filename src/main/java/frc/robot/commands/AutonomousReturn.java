@@ -14,13 +14,16 @@ import jaci.pathfinder.followers.EncoderFollower;
 import jaci.pathfinder.modifiers.TankModifier;
 import jaci.pathfinder.Waypoint;
 
-
+//Works for a single object placement only
+// startID: 0XX L Rocket, 1XX RRocket, 2XX CargoShip
+// {0/1}0{0->2} moves front to back
+// 20X L, 21X R
+// 2{0/1}{0->3} moves front to back
 
 // Call to return to the nearest input after inputting a piece
 public class AutonomousReturn extends Command {
-    public AutonomousReturn(int startID, int finishID) {
+    public AutonomousReturn(int startID) {
         this.start = startID;
-        this.target = finishID;
     }
 
     // Called just before this Command runs the first time
@@ -29,9 +32,81 @@ public class AutonomousReturn extends Command {
 
         Waypoint[] waypoints = new Waypoint [3];
 
-        //TODO: start waypoint
-        //TODO:  middle waypoint
-        //TODO: finish waypoint
+        Waypoint startWaypoint;
+        switch(start) {
+            case 0:
+                startWaypoint = new Waypoint(0.35,5.41,330);
+                break;
+            case 1:
+                startWaypoint = new Waypoint(0.50,5.82,270);
+                break;
+            case 2:
+                startWaypoint = new Waypoint(0.35,6.23,210);
+                break;
+            case 100:
+                startWaypoint = new Waypoint(7.88,5.41,30);
+                break;
+            case 101:
+                startWaypoint = new Waypoint(7.73,5.82,90);
+                break;
+            case 102:
+                startWaypoint = new Waypoint(7.88,6.23,150);
+                break;
+            case 200:
+                startWaypoint = new Waypoint(3.84,5.59,0);
+                break;
+            case 201:
+                startWaypoint = new Waypoint(3.38,6.62,90);
+                break;
+            case 202:
+                startWaypoint = new Waypoint(3.38,7.175,90);
+                break;
+            case 203:
+                startWaypoint = new Waypoint(3.38,7.728,90);
+                break;
+            case 210:
+                startWaypoint = new Waypoint(4.39,5.59,0);
+                break;
+            case 211:
+                startWaypoint = new Waypoint(4.85,6.62,270);
+                break;
+            case 212:
+                startWaypoint = new Waypoint(4.85,7.175,270);
+                break;
+            case 213:
+                startWaypoint = new Waypoint(4.85,7.728,270);
+                break;
+            default:
+                startWaypoint = new Waypoint(0,0,0); //ERROR
+                break;
+        }
+        waypoints[0] = startWaypoint;
+
+        boolean onLeft;
+        if ((0 <= start && start < 100) || (200 <= start && start < 210)) {
+            onLeft = true;
+        } else if ((100 <= start && start < 200) || (210 <= start && start < 220)) {
+            onLeft = false;
+        } else {
+            onLeft = false; //ERROR!!!!!!}
+        }
+
+        Waypoint midWaypoint;
+        if (onLeft) {
+            midWaypoint = new Waypoint(1.9,3.8,180);
+        } else {
+            midWaypoint = new Waypoint(6.33,3.8,180);
+        }
+        waypoints[1] = midWaypoint;
+
+
+        Waypoint finWaypoint;
+        if (onLeft) {
+            finWaypoint = new Waypoint(0.559,0.45,180);
+        } else {
+            finWaypoint = new Waypoint(7.67,0.45,180);
+        }
+        waypoints[2] = finWaypoint;
 
         Trajectory path = Robot.pathfinding.newComplexPath(waypoints);
 
@@ -79,7 +154,7 @@ public class AutonomousReturn extends Command {
         end();
     }
 
-    int target, start;
+    int start;
     EncoderFollower left, right;
     final double robotFrontalWidth = Robot.robotFrontalWidth;
     final double maxV = Robot.maxV;

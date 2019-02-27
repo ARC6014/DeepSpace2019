@@ -75,7 +75,7 @@ public class AutonomousDrive extends Command {
                 finalWaypoint = new Waypoint(0.50,5.82,270);
                 break;
             case 2:
-                finalWaypoint = new Waypoint(35,6.23,210);
+                finalWaypoint = new Waypoint(0.35,6.23,210);
                 break;
             case 100:
                 finalWaypoint = new Waypoint(7.88,5.41,30);
@@ -149,7 +149,7 @@ public class AutonomousDrive extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() { //TODO: ADD COMPLETION DETECTION; WHEN VISION DETECTED (OR OR)
+    protected boolean isFinished() { //TODO: ADD COMPLETION DETECTION; WHEN VISION DETECTED (OR OR); LIDAR distance
         return false;
     }
 
