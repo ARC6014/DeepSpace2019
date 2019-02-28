@@ -35,7 +35,7 @@ public class Drive extends PIDSubsystem {
   private final int rightEncoderCPR = 2048 * 4; //Check the encoder values
   private final double wheelDiameter = 4 * 2.54;
 
-  private double maxSpeed = 0.5;
+  private double maxSpeed = 1.0;
 
   public Drive() {
     super(0,0,0);
