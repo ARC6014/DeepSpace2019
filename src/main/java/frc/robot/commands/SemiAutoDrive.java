@@ -57,8 +57,7 @@ public class SemiAutoDrive extends Command{
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        double distance = 0.0; //TODO:ADD DISTANCE MEASUREMENT
-        return distance == 0.0;
+        return (left.isFinished() && right.isFinished());
     }
 
     // Called once after isFinished returns true

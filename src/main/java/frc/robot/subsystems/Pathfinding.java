@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;
@@ -44,8 +45,8 @@ public class Pathfinding extends Subsystem {
             // Implement obstacles if needed
         }
 
-        // Third variable movement time interval, max vel., acc., and jerk are 4-6, respectively; TODO
-        Trajectory.Config configuration = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.1, 1, 1, 1);
+        // TODO: Set dt
+        Trajectory.Config configuration = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.1, Robot.maxV, Robot.maxA, Robot.maxJ);
 
         Trajectory path =  Pathfinder.generate(waypoints, configuration);
 
