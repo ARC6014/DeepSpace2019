@@ -63,7 +63,9 @@ public class SemiAutoDrive extends Command{
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {}
+    protected void end() {
+        Robot.drive.tankDrive(0,0);
+    }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run

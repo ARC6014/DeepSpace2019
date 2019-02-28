@@ -13,8 +13,6 @@ import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;
 import jaci.pathfinder.modifiers.TankModifier;
 
-//TODO: Add handlers for autonomous
-
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
  */

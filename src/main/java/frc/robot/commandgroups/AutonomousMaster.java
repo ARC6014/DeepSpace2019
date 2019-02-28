@@ -14,10 +14,10 @@ public class AutonomousMaster extends CommandGroup{
     // 2{0/1}{0->3} moves front to back
     public AutonomousMaster(int start, int target1, int target2) {
         addSequential(new AutonomousDrive(start, target1));
-        //Vision
-        //Drop
+        //TODO VisionApproach
+        //TODO Drop
         addSequential(new AutonomousReturn(target1));
-        //Pickup
+        //TODO Pickup
 
         boolean onLeft;
         if ((0 <= start && start < 100) || (200 <= start && start < 210)) {
@@ -34,8 +34,8 @@ public class AutonomousMaster extends CommandGroup{
             addSequential(new AutonomousDrive(11, target2));
         }
 
-        //Vision
-        //Drop
+        //TODO VisionApproach
+        //TODO Drop
     }
 
     int start, target1, target2;
