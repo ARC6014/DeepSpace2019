@@ -30,7 +30,7 @@ public class AutonomousReturn extends Command {
     @Override
     protected void initialize() {
 
-        Waypoint[] waypoints = new Waypoint [3];
+        Waypoint[] waypoints = new Waypoint [4];
 
         Waypoint startWaypoint;
         switch(start) {
@@ -91,13 +91,31 @@ public class AutonomousReturn extends Command {
             onLeft = false; //ERROR!!!!!!}
         }
 
+        //TODO: FIRST PREMIDPOINT
+
+        Waypoint preMidPoint;
+        if (onLeft && ((start % 10) > 0)) {
+            preMidPoint = new Waypoint(1.905,5.842,180);
+        } else if ((!onLeft) && ((start % 10) > 0)) {
+            preMidPoint = new Waypoint(5.7,5.842,180);
+        } else if ((start == 200) || (start == 210)) {
+            preMidPoint =  new Waypoint(3.8,3.81, 0);
+        } else if (onLeft && (start == 0)) {
+            preMidPoint = new Waypoint(0.85,4.91,330);
+        } else if ((!onLeft) && (start == 100)) {
+            preMidPoint = new Waypoint(7.38,4.91,30);
+        } else {
+            preMidPoint = new Waypoint(0,0,0); //ERROR!!
+        }
+        waypoints[1] = preMidPoint;
+
         Waypoint midWaypoint;
         if (onLeft) {
             midWaypoint = new Waypoint(1.6,3.8,180);
         } else {
             midWaypoint = new Waypoint(6.03,3.8,180);
         }
-        waypoints[1] = midWaypoint;
+        waypoints[2] = midWaypoint;
 
 
         Waypoint finWaypoint;
@@ -106,7 +124,7 @@ public class AutonomousReturn extends Command {
         } else {
             finWaypoint = new Waypoint(7.67,0.45,180);
         }
-        waypoints[2] = finWaypoint;
+        waypoints[3] = finWaypoint;
 
         Trajectory path = Robot.pathfinding.newComplexPath(waypoints);
 
