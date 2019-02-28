@@ -18,7 +18,8 @@ import jaci.pathfinder.Waypoint;
 public class AutonomousDrive extends Command {
     //Works for a single object placement only
     // startPositionID: 0 1L, 1 1C, 2 1R, 3 2L, 4 2R, 5 3C, assumes robot won't fall off, thus, use 0, 1, 2 preferrably
-    //TODO: You also need to empirically add in an adjustment for the slant of the Level 1 platform
+    // Start 10 for left loading 11 for right loading
+    // TODO: You also need to empirically add in an adjustment for the slant of the Level 1 platform
     // targetID: 0XX L Rocket, 1XX RRocket, 2XX CargoShip
     // {0/1}0{0->2} moves front to back
     // 20X L, 21X R
@@ -48,12 +49,15 @@ public class AutonomousDrive extends Command {
             startWaypoint = new Waypoint(5.285, 0.61, 0);
         } else if (start == 5) {
             startWaypoint = new Waypoint(4.115, 0.61, 0);
+        } else if (start == 10) {
+            startWaypoint = new Waypoint(0.559,0.45,180);
+        } else if (start == 11) {
+            startWaypoint = new Waypoint(7.67,0.45,180);
         } else {
             startWaypoint = new Waypoint(0,0,0); //ERROR
         }
         waypoints[0] = startWaypoint;
 
-        // TODO: Improve middleCheckpoint
         Waypoint middleCheckpoint;
         if (target == 200 || target == 210) {
             middleCheckpoint = new Waypoint(4.115,4.115,0);

@@ -91,6 +91,7 @@ public class AutonomousReturn extends Command {
             onLeft = false; //ERROR!!!!!!}
         }
 
+        //TODO: ENSURE IT DOES NOT CROSS THE HAB L1
         Waypoint midWaypoint;
         if (onLeft) {
             midWaypoint = new Waypoint(1.9,3.8,180);

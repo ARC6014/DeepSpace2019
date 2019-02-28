@@ -10,7 +10,7 @@ import jaci.pathfinder.Waypoint;
 import jaci.pathfinder.modifiers.TankModifier;
 import jaci.pathfinder.followers.EncoderFollower;
 
-//Semi auto drive for once generated path; TODO: Implement contiuous generation
+//Semi auto drive for once generated path;
 public class SemiAutoDrive extends Command{
     public SemiAutoDrive() {
         // Use requires() here to declare subsystem dependencies
