@@ -91,12 +91,11 @@ public class AutonomousReturn extends Command {
             onLeft = false; //ERROR!!!!!!}
         }
 
-        //TODO: ENSURE IT DOES NOT CROSS THE HAB L1
         Waypoint midWaypoint;
         if (onLeft) {
-            midWaypoint = new Waypoint(1.9,3.8,180);
+            midWaypoint = new Waypoint(1.6,3.8,180);
         } else {
-            midWaypoint = new Waypoint(6.33,3.8,180);
+            midWaypoint = new Waypoint(6.03,3.8,180);
         }
         waypoints[1] = midWaypoint;
 
@@ -139,9 +138,9 @@ public class AutonomousReturn extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    protected boolean isFinished() { //TODO: FINISH RECOGNITION
         return false;
-    } //TODO: FINISH RECOGNITION
+    }
 
     // Called once after isFinished returns true
     @Override
