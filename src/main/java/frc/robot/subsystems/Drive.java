@@ -52,7 +52,9 @@ public class Drive extends PIDSubsystem {
   }
 
   @Override
-  public void initDefaultCommand() { }
+  public void initDefaultCommand() {
+
+  }
 
   @Override
   public void periodic() {
