@@ -155,8 +155,8 @@ public class AutonomousDrive extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() { //TODO: ADD COMPLETION DETECTION; WHEN VISION DETECTED (OR OR); LIDAR distance
-        return false;
+    protected boolean isFinished() {
+        return (left.isFinished() && right.isFinished());
     }
 
     // Called once after isFinished returns true

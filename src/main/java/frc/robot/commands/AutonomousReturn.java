@@ -91,8 +91,6 @@ public class AutonomousReturn extends Command {
             onLeft = false; //ERROR!!!!!!}
         }
 
-        //TODO: FIRST PREMIDPOINT
-
         Waypoint preMidPoint;
         if (onLeft && ((start % 10) > 0)) {
             preMidPoint = new Waypoint(1.905,5.842,180);
@@ -156,8 +154,8 @@ public class AutonomousReturn extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() { //TODO: FINISH RECOGNITION
-        return false;
+    protected boolean isFinished() {
+        return (left.isFinished() && right.isFinished());
     }
 
     // Called once after isFinished returns true
