@@ -58,6 +58,8 @@ public class AutonomousDrive extends Command {
         }
         waypoints[0] = startWaypoint;
 
+        //TODO: SEE IF YOU NEED A PREMIDPOINT FOR THE SIDES
+
         Waypoint middleCheckpoint;
         if (target == 200 || target == 210) {
             middleCheckpoint = new Waypoint(4.115,4.115,0);
