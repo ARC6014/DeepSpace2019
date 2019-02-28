@@ -26,11 +26,18 @@ public class Robot extends TimedRobot {
   public static CargoIntakeWrist cargoIntakeWrist = new CargoIntakeWrist();
   public static Drive drive = new Drive();
   public static Elevator elevator = new Elevator();
-  public static OI m_oi;
+  public static ManualController manualControl = new ManualController();
   public static Pathfinding pathfinding = new Pathfinding();
 
-  Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  public static final double robotFrontalWidth = 0.615909;
+  public static final double maxV = 0.0; //TODO: SET MAX VELOCITY
+  public static final double maxA = 0.0; //TODO: SET MAX ACCELERATION
+  public static final double maxJ = 0.0; //TODO: SET MAX JERK
+  public static final int encoderTicksPerRev = 8192; //TODO: ENSURE THIS IS RIGHT
+  public static final double wheelDiameter = 0.1016;
+
+  Command autonomousCommand;
+  SendableChooser<Command> chooser = new SendableChooser<>();
 
   /**
    * This function is run when the robot is first started up and should be
@@ -38,10 +45,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_oi = new OI();
     //m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", m_chooser);
+    SmartDashboard.putData("Auto mode", chooser);
   }
 
   /**
@@ -83,7 +89,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
+    autonomousCommand = chooser.getSelected();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -93,8 +99,8 @@ public class Robot extends TimedRobot {
      */
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.start();
+    if (autonomousCommand != null) {
+      autonomousCommand.start();
     }
   }
 
@@ -112,8 +118,8 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+    if (autonomousCommand != null) {
+      autonomousCommand.cancel();
     }
   }
 
@@ -131,13 +137,4 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
-
-
-
-     public static final double robotFrontalWidth = 0.615909;
-     public static final double maxV = 0.0; //TODO: SET MAX VELOCITY
-     public static final double maxA = 0.0; //TODO: SET MAX ACCELERATION
-     public static final double maxJ = 0.0; //TODO: SET MAX JERK
-     public static final int encoderTicksPerRev = 8192; //TODO: ENSURE THIS IS RIGHT
-     public static final double wheelDiameter = 0.1016;
 }
