@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.teleop;
 
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -10,9 +10,8 @@ import frc.robot.Robot;
 
 public class TeleopDrive extends Command {
     private double y,x;
-    public TeleopDrive(double y, double x) {
-        this.y = y;
-        this.x = x;
+    public TeleopDrive() {
+
     }
 
     @Override

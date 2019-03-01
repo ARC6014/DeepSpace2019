@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.commands.PIDIntakeWrist;
+import frc.robot.commands.teleop.PIDIntakeWrist;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.

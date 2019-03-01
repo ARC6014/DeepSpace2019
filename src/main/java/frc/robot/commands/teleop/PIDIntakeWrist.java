@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
@@ -14,10 +14,9 @@ import frc.robot.Robot;
 /**
  * An example command.  You can replace me with your own command.
  */
-public class PIDElevator extends Command {
+public class PIDIntakeWrist extends Command {
 
-    public PIDElevator() {
-
+    public PIDIntakeWrist() {
     }
 
     @Override
@@ -27,19 +26,17 @@ public class PIDElevator extends Command {
 
     @Override
     protected void execute() {
-        Robot.elevator.PIDLift();
+        Robot.cargoIntakeWrist.PIDRotate();
     }
 
     @Override
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     @Override
-    protected void end() {
-    }
+    protected void end() {Robot.cargoIntakeWrist.setWristSpeed(0); }
 
     @Override
-    protected void interrupted() {
-    }
+    protected void interrupted() { end(); }
 }
