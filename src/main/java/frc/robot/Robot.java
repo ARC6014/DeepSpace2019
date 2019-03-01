@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
   public static final double maxJ = 0.0; //TODO: SET MAX JERK
   public static final int encoderTicksPerRev = 8192; //TODO: ENSURE THIS IS RIGHT
   public static final double wheelDiameter = 0.1016;
+  public static final boolean usePathWeaver = true; //True -> Pathweaver; False -> Pathfinder
 
   Command autonomousCommand;
   SendableChooser<Command> chooser = new SendableChooser<>();
