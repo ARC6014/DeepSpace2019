@@ -17,31 +17,31 @@ import edu.wpi.first.wpilibj.SPI;
  */
 public class RobotMap {
     //CAN
-    public static final int driveFrontLeftMotor = 0;
-    public static final int driveRearLeftMotor = 0;
-    public static final int driveFrontRightMotor = 0;
-    public static final int driveRearRightMotor = 0;
+    public static final int driveFrontLeftMotor = 8;
+    public static final int driveRearLeftMotor = 2;
+    public static final int driveFrontRightMotor = 5;
+    public static final int driveRearRightMotor = 1;
 
-    public static final int elevatorMotor = 0;
+    public static final int elevatorMotor = 3;
 
-    public static final int cargoIntakeMotor = 0;
+    public static final int cargoIntakeMotor = 4;
 
-    public static final int cargoIntakeWristRightMotor = 0;
-    public static final int cargoIntakeWristLeftMotor = 0;
+    public static final int cargoIntakeWristRightMotor = 6;
+    public static final int cargoIntakeWristLeftMotor = 7;
 
     //DIO
     public static final int driveLeftEncoderA = 0;
-    public static final int driveLeftEncoderB = 0;
-    public static final int driveRightEncoderA = 0;
-    public static final int driveRightEncoderB = 0;
+    public static final int driveLeftEncoderB = 1;
+    public static final int driveRightEncoderA = 2;
+    public static final int driveRightEncoderB = 3;
 
-    public static final int elevatorEncoderA = 0;
-    public static final int elevatorEncoderB = 0;
-    public static final int elevatorBottomSwitch = 0;
+    public static final int elevatorEncoderA = 4;
+    public static final int elevatorEncoderB = 5;
+    public static final int elevatorBottomSwitch = 6;
 
-    public static final int cargoIntakeWristEncoderA = 0;
-    public static final int cargoIntakeWristEncoderB = 0;
-    public static final int cargoIntakeWristBottomSwitch = 0;
+    public static final int cargoIntakeWristEncoderA = 7;
+    public static final int cargoIntakeWristEncoderB = 8;
+    public static final int cargoIntakeWristBottomSwitch = 9;
 
     //NavX
     public static final SPI.Port navx = SPI.Port.kMXP;
