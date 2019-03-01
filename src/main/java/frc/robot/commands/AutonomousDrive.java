@@ -7,12 +7,16 @@
 
 package frc.robot.commands;
 
+import java.lang.*;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.followers.EncoderFollower;
 import jaci.pathfinder.modifiers.TankModifier;
 import jaci.pathfinder.Waypoint;
+import jaci.pathfinder.Pathfinder;
+import jaci.pathfinder.PathfinderFRC;
+
 
 
 public class AutonomousDrive extends Command {
@@ -34,106 +38,116 @@ public class AutonomousDrive extends Command {
     @Override
     protected void initialize() {
 
-        Waypoint[] waypoints = new Waypoint [3];
+        if (!Robot.usePathWeaver) {
+            Waypoint[] waypoints = new Waypoint[3];
 
-        Waypoint startWaypoint;
-        if (start == 0) {
-            startWaypoint = new Waypoint(2.945, 1.67, 0);
-        } else if (start == 1) {
-            startWaypoint = new Waypoint(4.115, 1.67, 0);
-        } else if (start == 2) {
-            startWaypoint = new Waypoint(5.285, 1.67, 0);
-        } else if (start == 3) {
-            startWaypoint = new Waypoint(2.945, 0.61, 0);
-        } else if (start == 4) {
-            startWaypoint = new Waypoint(5.285, 0.61, 0);
-        } else if (start == 5) {
-            startWaypoint = new Waypoint(4.115, 0.61, 0);
-        } else if (start == 10) {
-            startWaypoint = new Waypoint(0.559,0.45,180);
-        } else if (start == 11) {
-            startWaypoint = new Waypoint(7.67,0.45,180);
+            Waypoint startWaypoint;
+            if (start == 0) {
+                startWaypoint = new Waypoint(2.945, 1.67, 0);
+            } else if (start == 1) {
+                startWaypoint = new Waypoint(4.115, 1.67, 0);
+            } else if (start == 2) {
+                startWaypoint = new Waypoint(5.285, 1.67, 0);
+            } else if (start == 3) {
+                startWaypoint = new Waypoint(2.945, 0.61, 0);
+            } else if (start == 4) {
+                startWaypoint = new Waypoint(5.285, 0.61, 0);
+            } else if (start == 5) {
+                startWaypoint = new Waypoint(4.115, 0.61, 0);
+            } else if (start == 10) {
+                startWaypoint = new Waypoint(0.559, 0.45, 180);
+            } else if (start == 11) {
+                startWaypoint = new Waypoint(7.67, 0.45, 180);
+            } else {
+                startWaypoint = new Waypoint(0, 0, 0); //ERROR
+            }
+            waypoints[0] = startWaypoint;
+
+            //TODO: SEE IF YOU NEED A PREMIDPOINT FOR THE SIDES
+
+            Waypoint middleCheckpoint;
+            if (target == 200 || target == 210) {
+                middleCheckpoint = new Waypoint(4.115, 4.115, 0);
+            } else if ((0 <= target && target < 100) || (200 <= target && target < 210)) {
+                middleCheckpoint = new Waypoint(2.06, 4.115, 0);
+            } else if ((100 <= target && target < 200) || (210 <= target && target < 220)) {
+                middleCheckpoint = new Waypoint(6.17, 4.115, 0);
+            } else {
+                middleCheckpoint = new Waypoint(0, 0, 0); //ERROR
+            }
+            waypoints[1] = middleCheckpoint;
+
+            Waypoint finalWaypoint;
+            switch (target) {
+                case 0:
+                    finalWaypoint = new Waypoint(0.35, 5.41, 330);
+                    break;
+                case 1:
+                    finalWaypoint = new Waypoint(0.50, 5.82, 270);
+                    break;
+                case 2:
+                    finalWaypoint = new Waypoint(0.35, 6.23, 210);
+                    break;
+                case 100:
+                    finalWaypoint = new Waypoint(7.88, 5.41, 30);
+                    break;
+                case 101:
+                    finalWaypoint = new Waypoint(7.73, 5.82, 90);
+                    break;
+                case 102:
+                    finalWaypoint = new Waypoint(7.88, 6.23, 150);
+                    break;
+                case 200:
+                    finalWaypoint = new Waypoint(3.84, 5.59, 0);
+                    break;
+                case 201:
+                    finalWaypoint = new Waypoint(3.38, 6.62, 90);
+                    break;
+                case 202:
+                    finalWaypoint = new Waypoint(3.38, 7.175, 90);
+                    break;
+                case 203:
+                    finalWaypoint = new Waypoint(3.38, 7.728, 90);
+                    break;
+                case 210:
+                    finalWaypoint = new Waypoint(4.39, 5.59, 0);
+                    break;
+                case 211:
+                    finalWaypoint = new Waypoint(4.85, 6.62, 270);
+                    break;
+                case 212:
+                    finalWaypoint = new Waypoint(4.85, 7.175, 270);
+                    break;
+                case 213:
+                    finalWaypoint = new Waypoint(4.85, 7.728, 270);
+                    break;
+                default:
+                    finalWaypoint = new Waypoint(0, 0, 0); //ERROR
+                    break;
+            }
+            waypoints[2] = finalWaypoint;
+            //End point add
+
+            Trajectory path = Robot.pathfinding.newComplexPath(waypoints);
+
+            TankModifier modifier = new TankModifier(path).modify(robotFrontalWidth);
+
+
+            left = new EncoderFollower(modifier.getLeftTrajectory());
+            right = new EncoderFollower(modifier.getRightTrajectory());
+
         } else {
-            startWaypoint = new Waypoint(0,0,0); //ERROR
+            String pathName;
+            if (false) {}
+//            else if () {}
+//            else if () {}
+//            else if () {}  //TODO: IMPLEMENT NAMES OF PRECREATED PATHS AND CONDITIONS FROM PATHWEAVER
+//            else if () {}
+//            else if () {}
+            else {pathName = "";}  // Path not found, TODO redirect to regular pathfinder
+            left = new EncoderFollower(PathfinderFRC.getTrajectory(pathName + ".left"));
+            right = new EncoderFollower(PathfinderFRC.getTrajectory(pathName + ".right"));
         }
-        waypoints[0] = startWaypoint;
-
-        //TODO: SEE IF YOU NEED A PREMIDPOINT FOR THE SIDES
-
-        Waypoint middleCheckpoint;
-        if (target == 200 || target == 210) {
-            middleCheckpoint = new Waypoint(4.115,4.115,0);
-        } else if ((0 <= target && target < 100) || (200 <= target && target < 210)) {
-            middleCheckpoint = new Waypoint(2.06,4.115,0);
-        } else if ((100 <= target && target < 200) || (210 <= target && target < 220)){
-            middleCheckpoint = new Waypoint(6.17,4.115,0);
-        } else {
-            middleCheckpoint = new Waypoint(0,0,0); //ERROR
-        }
-        waypoints[1] = middleCheckpoint;
-
-        Waypoint finalWaypoint;
-        switch(target) {
-            case 0:
-                finalWaypoint = new Waypoint(0.35,5.41,330);
-                break;
-            case 1:
-                finalWaypoint = new Waypoint(0.50,5.82,270);
-                break;
-            case 2:
-                finalWaypoint = new Waypoint(0.35,6.23,210);
-                break;
-            case 100:
-                finalWaypoint = new Waypoint(7.88,5.41,30);
-                break;
-            case 101:
-                finalWaypoint = new Waypoint(7.73,5.82,90);
-                break;
-            case 102:
-                finalWaypoint = new Waypoint(7.88,6.23,150);
-                break;
-            case 200:
-                finalWaypoint = new Waypoint(3.84,5.59,0);
-                break;
-            case 201:
-                finalWaypoint = new Waypoint(3.38,6.62,90);
-                break;
-            case 202:
-                finalWaypoint = new Waypoint(3.38,7.175,90);
-                break;
-            case 203:
-                finalWaypoint = new Waypoint(3.38,7.728,90);
-                break;
-            case 210:
-                finalWaypoint = new Waypoint(4.39,5.59,0);
-                break;
-            case 211:
-                finalWaypoint = new Waypoint(4.85,6.62,270);
-                break;
-            case 212:
-                finalWaypoint = new Waypoint(4.85,7.175,270);
-                break;
-            case 213:
-                finalWaypoint = new Waypoint(4.85,7.728,270);
-                break;
-            default:
-                finalWaypoint = new Waypoint(0,0,0); //ERROR
-                break;
-        }
-        waypoints[2] = finalWaypoint;
-        //End point add
-
-        Trajectory path = Robot.pathfinding.newComplexPath(waypoints);
-
-        TankModifier modifier = new TankModifier(path).modify(robotFrontalWidth);
-
-        Trajectory[] trajectories = new Trajectory[] {
-                modifier.getLeftTrajectory(),
-                modifier.getRightTrajectory()
-        };
-
-        left = new EncoderFollower(modifier.getLeftTrajectory());
-        right = new EncoderFollower(modifier.getRightTrajectory());
 
         left.configureEncoder((int) (Robot.drive.getLeftEncoderRev()*encoderTicksPerRev), encoderTicksPerRev,
                 wheelDiameter);
