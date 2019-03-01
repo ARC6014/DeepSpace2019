@@ -10,12 +10,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import frc.robot.commands.PIDElevator;
+import frc.robot.commands.teleop.PIDElevator;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
@@ -34,6 +33,15 @@ public class Elevator extends PIDSubsystem {
   private final int encoderCPR = 2048 * 4; //Check the encoder values
   public final double baseToIntakeHeight = 39.12; //Measure base height from the ground to the elevator.
   public final double maxHeight = 194.05; //Check
+
+  public enum ElevatorStateMachine{
+    DISABLED,
+    MANUAL,
+    PID
+
+  }
+
+  public ElevatorStateMachine elevatorStateMachine = ElevatorStateMachine.MANUAL;
 
 
   public Elevator() {

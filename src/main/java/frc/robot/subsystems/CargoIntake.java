@@ -19,6 +19,12 @@ public class CargoIntake extends Subsystem {
 
   VictorSPX cargoIntakeMotor = new VictorSPX(RobotMap.cargoIntakeMotor);
 
+  public enum CargoIntakeStateMachine {
+    DISABLED,
+    MANUAL
+  }
+  public CargoIntakeStateMachine cargoIntakeStateMachine = CargoIntakeStateMachine.DISABLED;
+
   @Override
   public void initDefaultCommand() {
 

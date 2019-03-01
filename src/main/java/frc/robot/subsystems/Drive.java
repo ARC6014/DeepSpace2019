@@ -19,7 +19,7 @@ import frc.robot.RobotMap;
  * An example subsystem.  You can replace me with your own Subsystem.
  */
 public class Drive extends PIDSubsystem {
-  private double outPID = 0;
+
 
   AHRS navx = new AHRS(RobotMap.navx);
 
@@ -36,6 +36,15 @@ public class Drive extends PIDSubsystem {
   private final double wheelDiameter = 4 * 2.54;
 
   private double maxSpeed = 1.0;
+
+  public enum DriveStateMachine{
+    DISABLED,
+    MANUAL,
+    PATHFINDING
+  }
+  public DriveStateMachine driveStateMachine = DriveStateMachine.MANUAL;
+
+  private double outPID = 0;
 
   public Drive() {
     super(0,0,0);
