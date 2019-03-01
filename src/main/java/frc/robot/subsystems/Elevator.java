@@ -34,6 +34,15 @@ public class Elevator extends PIDSubsystem {
   public final double baseToIntakeHeight = 39.12; //Measure base height from the ground to the elevator.
   public final double maxHeight = 194.05; //Check
 
+  public enum ElevatorStateMachine{
+    DISABLED,
+    MANUAL,
+    PID
+
+  }
+
+  public ElevatorStateMachine elevatorStateMachine = ElevatorStateMachine.MANUAL;
+
 
   public Elevator() {
     super(0,0,0);

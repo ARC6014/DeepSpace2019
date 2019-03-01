@@ -32,6 +32,13 @@ public class CargoIntakeWrist extends PIDSubsystem {
   private final int encoderCPR = 2048 * 4;
   private final double outputRatio = 5.0;
 
+  public enum CargoIntakeWristStateMachine{
+    DISABLED,
+    MANUAL,
+    PID
+  }
+  public CargoIntakeWristStateMachine cargoIntakeWristStateMachine = CargoIntakeWristStateMachine.MANUAL;
+
   public CargoIntakeWrist() {
     super(0,0,0);
     setAbsoluteTolerance(1);
@@ -40,7 +47,6 @@ public class CargoIntakeWrist extends PIDSubsystem {
     cargoIntakeWristLeftMotor.setInverted(true);
     cargoIntakeWristLeftMotor.follow(cargoIntakeWristRightMotor);
   }
-
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new PIDIntakeWrist());
