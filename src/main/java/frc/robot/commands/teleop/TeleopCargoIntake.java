@@ -2,6 +2,7 @@ package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.CargoIntake;
 
 public class TeleopCargoIntake  extends Command{
     private double power;
@@ -13,7 +14,16 @@ public class TeleopCargoIntake  extends Command{
 
     @Override
     protected void execute() {
-        Robot.cargoIntake.setIntakeSpeed(power);
+        if (Robot.cargoIntake.cargoIntakeStateMachine== CargoIntake.CargoIntakeStateMachine.MANUAL){
+            if(Robot.manualControl.getCargoIntake()) {
+                Robot.cargoIntake.setIntakeSpeed(1.0);
+            } else if(Robot.manualControl.getLaunch()) {
+                Robot.cargoIntake.setIntakeSpeed(-1.0);
+            } else {
+                Robot.cargoIntake.setIntakeSpeed(0);
+            }
+
+        }
     }
 
     @Override

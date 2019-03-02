@@ -7,9 +7,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.Robot;
+import frc.robot.subsystems.CargoIntakeWrist;
+import frc.robot.subsystems.Drive;
 
 public class TeleopDrive extends Command {
-    private double y,x;
     public TeleopDrive() {
 
     }
@@ -20,7 +21,12 @@ public class TeleopDrive extends Command {
 
     @Override
     protected void execute() {
-        Robot.drive.arcadeDrive(y,x);
+
+        if (Robot.drive.driveStateMachine == Drive.DriveStateMachine.MANUAL){
+            Robot.drive.arcadeDrive(Robot.manualControl.getDriveY(),Robot.manualControl.getDriveX());
+
+
+        }
     }
 
     @Override
