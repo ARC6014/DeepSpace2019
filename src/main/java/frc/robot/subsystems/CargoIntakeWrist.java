@@ -91,7 +91,6 @@ public class CargoIntakeWrist extends PIDSubsystem {
   public void usePIDOutput(double output) {
     this.outPID = output;
   }
-
   public void setWristAngle(double angle) {
     this.setSetpoint(angle);
   }
