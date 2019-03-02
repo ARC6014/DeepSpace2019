@@ -18,7 +18,6 @@ public class ManualController {
     public boolean getLaunch() { return xbox.getBumper(rightStick); }
 
     public double getElevator() { return -xbox.getY(rightStick); }
-    public boolean getHoldElevator() { return xbox.getXButton(); }
 
     public double getCargoIntakeWrist() { return xbox.getX(rightStick); }
 

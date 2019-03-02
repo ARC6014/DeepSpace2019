@@ -99,7 +99,13 @@ public class Elevator extends PIDSubsystem {
   }
 
   public void setElevatorSpeed(double speed) {
-    elevatorMotor.set(ControlMode.PercentOutput, speed);
+    if (speed < 0 && elevatorHeightCm() < baseToIntakeHeight + 10) {
+      elevatorMotor.set(ControlMode.PercentOutput, (elevatorHeightCm() - baseToIntakeHeight)/10 * speed);
+    } else if (speed > 1 && elevatorHeightCm() > maxHeight - 10) {
+      elevatorMotor.set(ControlMode.PercentOutput, (maxHeight - elevatorHeightCm())/10 * speed);
+    } else {
+      elevatorMotor.set(ControlMode.PercentOutput, speed);
+    }
   }
 
 }
