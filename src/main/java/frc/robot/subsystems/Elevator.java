@@ -60,6 +60,10 @@ public class Elevator extends PIDSubsystem {
 
   @Override
   public void periodic() {
+    if (elevatorBottomSwitch.get()){
+      resetEncoder();
+    }
+
     SmartDashboard.putNumber("ElevatorHeight", elevatorHeightCm());
     SmartDashboard.putNumber("ElevatorMotor",elevatorMotor.getMotorOutputPercent());
   }

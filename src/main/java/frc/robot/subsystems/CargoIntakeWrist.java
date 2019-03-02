@@ -54,6 +54,11 @@ public class CargoIntakeWrist extends PIDSubsystem {
 
   @Override
   public void periodic() {
+    if(cargoIntakeWristBottomSwitch.get()){
+      resetEncoder();
+    }
+
+
     SmartDashboard.putNumber("CargoWristMotor", cargoIntakeWristRightMotor.getMotorOutputPercent());
     SmartDashboard.putNumber("WristAngle", getWristAngle());
     SmartDashboard.putBoolean("CargoIntakeParallel", getCargoSwitchStatus());
