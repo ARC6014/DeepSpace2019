@@ -9,6 +9,7 @@ package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.Elevator;
 
 
 /**
@@ -27,8 +28,16 @@ public class PIDElevator extends Command {
 
     @Override
     protected void execute() {
-        Robot.elevator.PIDLift();
+        if (Robot.elevator.elevatorStateMachine == Elevator.ElevatorStateMachine.PID ){
+            Robot.elevator.PIDLift();
+        }
+        else if (Robot.elevator.elevatorStateMachine== Elevator.ElevatorStateMachine.MANUAL){
+            Robot.elevator.setElevatorSpeed (Robot.manualControl.getElevator());
+
+        }
+
     }
+
 
     @Override
     protected boolean isFinished() {
