@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
+import frc.robot.commands.teleop.TeleopDrive;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
@@ -62,7 +63,7 @@ public class Drive extends PIDSubsystem {
 
   @Override
   public void initDefaultCommand() {
-
+    setDefaultCommand(new TeleopDrive());
   }
 
   @Override

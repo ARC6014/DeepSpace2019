@@ -11,6 +11,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.teleop.PIDIntakeWrist;
+import frc.robot.commands.teleop.TeleopCargoIntake;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
@@ -27,6 +29,7 @@ public class CargoIntake extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+    setDefaultCommand(new TeleopCargoIntake());
 
   }
 
