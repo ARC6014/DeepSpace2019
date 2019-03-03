@@ -16,6 +16,8 @@ import frc.robot.subsystems.*;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.cscore.UsbCamera;
 
+import java.util.ArrayList;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -38,6 +40,8 @@ public class Robot extends TimedRobot {
   public static final int encoderTicksPerRev = 8192; //TODO: ENSURE THIS IS RIGHT
   public static final double wheelDiameter = 0.1016;
   public static final boolean usePathWeaver = true; //True -> Pathweaver; False -> Pathfinder
+  public static final double dt = 0.1;
+  public static ArrayList<ArrayList<Double>> positions = new ArrayList<ArrayList<Double>>();
 
   Command autonomousCommand;
   SendableChooser<Command> chooser = new SendableChooser<>();
