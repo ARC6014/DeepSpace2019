@@ -54,11 +54,13 @@ public class PIDElevator extends Command {
                 (new RocketHatchL3()).start();
             } else if (Robot.competitionController.getIntakeCargoShipLevel()) {
                 (new CargoShipCargo()).start();
+            } else if (Robot.competitionController.getIntakeLowestLevel()) {
+                (new IntakeBaseLevel()).start();
             }
             Robot.elevator.PIDLift();
         }
         else if (Robot.elevator.elevatorStateMachine== Elevator.ElevatorStateMachine.MANUAL) {
-//            Robot.elevator.setElevatorSpeed (Robot.manualControl.getElevator());
+            Robot.elevator.setElevatorSpeed (Robot.manualControl.getElevator());
         }
 
     }

@@ -53,7 +53,7 @@ public class Elevator extends PIDSubsystem {
     getPIDController().setInputRange(baseToIntakeHeight,maxHeight);
     getPIDController().setOutputRange(-1,1);
     elevatorMotor.setInverted(true);
-    setSetpoint(192);
+    setSetpoint(baseToIntakeHeight);
     elevatorEncoder.setReverseDirection(true);
   }
 

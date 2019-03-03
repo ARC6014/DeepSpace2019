@@ -15,7 +15,8 @@ public class CompetitionController {
     public double getDriveY() { return -xbox.getY(leftStick); }
 
     public boolean getIntakeCargoShipLevel() {return xbox.getAButton();}
-    public boolean getIntakeLowestLevel() {return xbox.getAButton();}
+    public boolean getIntakeLowestLevel() {return xbox.getBButton();}
+
     public boolean getIntakeCargo1RocketLevel(){return joystick.getRawButton(11);}
     public boolean getIntakeHatch1RocketLevel(){return joystick.getRawButton(12);}
     public boolean getIntakeCargo2RocketLevel(){return joystick.getRawButton(9);}
