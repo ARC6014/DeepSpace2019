@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,7 +30,7 @@ public class Elevator extends PIDSubsystem {
 
   private final double chainPitch = 0.250 * 2.54;
   private final int sprocketTeeth = 22;
-  private final double outputRatio = -2.5;
+  private final double outputRatio = 2.5;
   private final int encoderCPR = 2048; //Check the encoder values
   public final double baseToIntakeHeight = 39.12; //Measure base height from the ground to the elevator.
   public final double maxHeight = 194.05; //Check
@@ -45,15 +44,17 @@ public class Elevator extends PIDSubsystem {
 
   }
 
-  public ElevatorStateMachine elevatorStateMachine = ElevatorStateMachine.MANUAL;
+  public ElevatorStateMachine elevatorStateMachine = ElevatorStateMachine.PID;
 
 
   public Elevator() {
-    super(0,0,0);
+    super(0.05,0,0);
     setAbsoluteTolerance(1);
     getPIDController().setInputRange(baseToIntakeHeight,maxHeight);
     getPIDController().setOutputRange(-1,1);
     elevatorMotor.setInverted(true);
+    setSetpoint(baseToIntakeHeight);
+    elevatorEncoder.setReverseDirection(true);
   }
 
   @Override
@@ -119,5 +120,6 @@ public class Elevator extends PIDSubsystem {
     }
     */
   }
+
 
 }
