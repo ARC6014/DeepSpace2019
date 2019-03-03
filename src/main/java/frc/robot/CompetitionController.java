@@ -32,6 +32,6 @@ public class CompetitionController {
     public boolean getCargoIntake() {return xbox.getTriggerAxis(leftStick) >= 0.5;}
     public boolean getHatchIntake() {return xbox.getTriggerAxis(rightStick) >= 0.5;}
 
-
+    public boolean switchModes() {return (joystick.getRawButton(2) && joystick.getRawButton(3) && joystick.getRawButton(4) && joystick.getTrigger());}
 
 }
