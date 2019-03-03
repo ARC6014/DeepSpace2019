@@ -19,6 +19,7 @@ import frc.robot.subsystems.Elevator;
  * An example command.  You can replace me with your own command.
  */
 public class PIDIntakeWrist extends Command {
+    private boolean switcher = false;
 
     public PIDIntakeWrist() {
         requires(Robot.cargoIntakeWrist);
@@ -31,6 +32,17 @@ public class PIDIntakeWrist extends Command {
 
     @Override
     protected void execute() {
+        if (Robot.competitionController.switchModes() && !switcher) {
+            switcher = true;
+            if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine == CargoIntakeWrist.CargoIntakeWristStateMachine.PID ) {
+                Robot.cargoIntakeWrist.cargoIntakeWristStateMachine = CargoIntakeWrist.CargoIntakeWristStateMachine.MANUAL;
+            } else if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine == CargoIntakeWrist.CargoIntakeWristStateMachine.MANUAL) {
+                Robot.cargoIntakeWrist.cargoIntakeWristStateMachine = CargoIntakeWrist.CargoIntakeWristStateMachine.PID;
+            }
+        } else {
+            switcher = false;
+        }
+
         if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine == CargoIntakeWrist.CargoIntakeWristStateMachine.PID ){
             Robot.cargoIntakeWrist.enable();
         }
