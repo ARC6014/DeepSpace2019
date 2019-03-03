@@ -19,6 +19,7 @@ import frc.robot.commandgroups.*;
  * An example command.  You can replace me with your own command.
  */
 public class PIDElevator extends Command {
+    private boolean switcher = false;
 
     public PIDElevator() {
         requires(Robot.elevator);
@@ -31,6 +32,17 @@ public class PIDElevator extends Command {
 
     @Override
     protected void execute() {
+
+        if (Robot.competitionController.switchModes() && !switcher) {
+            switcher = true;
+            if (Robot.elevator.elevatorStateMachine == Elevator.ElevatorStateMachine.PID ) {
+                Robot.elevator.elevatorStateMachine = Elevator.ElevatorStateMachine.MANUAL;
+            } else if (Robot.elevator.elevatorStateMachine == Elevator.ElevatorStateMachine.MANUAL) {
+                Robot.elevator.elevatorStateMachine = Elevator.ElevatorStateMachine.PID;
+            }
+        } else {
+            switcher = false;
+        }
 
         if (Robot.elevator.elevatorStateMachine == Elevator.ElevatorStateMachine.PID ){
             Robot.elevator.enable();
