@@ -11,7 +11,7 @@ public class CompetitionController {
     Joystick joystick  = new Joystick(1);
 
 
-    public double getDriveX() { return xbox.getX(leftStick); }
+    public double getDriveX() { return xbox.getX(rightStick); }
     public double getDriveY() { return -xbox.getY(leftStick); }
 
     public boolean getIntakeCargoShipLevel() {return xbox.getAButton();}
@@ -28,8 +28,8 @@ public class CompetitionController {
 
 
     public boolean getCargoPlace() {return xbox.getBumper(leftStick);}
-    public boolean getHatchPlace() {return xbox.getBumper(rightStick);}
-    public boolean getCargoIntake() {return xbox.getTriggerAxis(leftStick) >= 0.5;}
+    public boolean getHatchPlace() {return xbox.getTriggerAxis(leftStick) >= 0.5;}
+    public boolean getCargoIntake() {return xbox.getBumper(rightStick);}
     public boolean getHatchIntake() {return xbox.getTriggerAxis(rightStick) >= 0.5;}
 
     public boolean switchModes() {return (joystick.getRawButton(2) && joystick.getRawButton(3) && joystick.getRawButton(4) && joystick.getTrigger());}

@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 import frc.robot.Robot;
 
+
 public class TimedDrive extends TimedCommand {
 
     double x;
@@ -10,6 +11,7 @@ public class TimedDrive extends TimedCommand {
 
     public TimedDrive(double x, double y, double timeout) {
         super(timeout);
+        requires(Robot.drive);
         this.x = x;
         this.y = y;
     }

@@ -18,9 +18,9 @@ public class TeleopCargoIntake  extends Command{
     protected void execute() {
         if (Robot.cargoIntake.cargoIntakeStateMachine == CargoIntake.CargoIntakeStateMachine.MANUAL){
             if(Robot.competitionController.getCargoIntake()) {
-                Robot.cargoIntake.setIntakeSpeed(1.0);
-            } else if(Robot.competitionController.getCargoPlace()) {
                 Robot.cargoIntake.setIntakeSpeed(-1.0);
+            } else if(Robot.competitionController.getCargoPlace()) {
+                Robot.cargoIntake.setIntakeSpeed(1.0);
             } else {
                 Robot.cargoIntake.setIntakeSpeed(0);
             }

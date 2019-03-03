@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 import frc.robot.commands.DropHatch;
 import frc.robot.commands.LiftElevator;
-import frc.robot.commands.LiftHatch;
 import frc.robot.commands.TimedDrive;
 
 public class GetHatchPlace extends CommandGroup {

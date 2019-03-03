@@ -40,6 +40,11 @@ public class PIDElevator extends Command {
         }
 
         if (Robot.elevator.elevatorStateMachine == Elevator.ElevatorStateMachine.PID ){
+
+            if (Robot.elevator.getElevatorSwitchStatus()) {
+                Robot.elevator.resetEncoder();
+            }
+
             if (Robot.competitionController.getIntakeCargo1RocketLevel()) {
                 (new RocketCargoL1()).start();
             } else if (Robot.competitionController.getIntakeCargo2RocketLevel()) {

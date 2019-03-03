@@ -25,7 +25,7 @@ public class CargoIntake extends Subsystem {
     DISABLED,
     MANUAL
   }
-  public CargoIntakeStateMachine cargoIntakeStateMachine = CargoIntakeStateMachine.DISABLED;
+  public CargoIntakeStateMachine cargoIntakeStateMachine = CargoIntakeStateMachine.MANUAL;
 
   @Override
   public void initDefaultCommand() {
