@@ -20,6 +20,7 @@ import frc.robot.commandgroups.*;
  */
 public class PIDElevator extends Command {
     private boolean switcher = false;
+    private boolean working = false;
 
     public PIDElevator() {
         requires(Robot.elevator);
@@ -53,26 +54,39 @@ public class PIDElevator extends Command {
 
         if (Robot.elevator.elevatorStateMachine == Elevator.ElevatorStateMachine.PID ){
             if (Robot.competitionController.getIntakeCargo1RocketLevel()) {
+                working = true;
                 (new RocketCargoL1()).start();
             } else if (Robot.competitionController.getIntakeCargo2RocketLevel()) {
+                working = true;
                 (new RocketCargoL2()).start();
             } else if (Robot.competitionController.getIntakeCargo3RocketLevel()) {
+                working = true;
                 (new RocketCargoL3()).start();
             } else if (Robot.competitionController.getIntakeHatch1RocketLevel()) {
+                working = true;
                 (new RocketHatchL1()).start();
             } else if (Robot.competitionController.getIntakeHatch2RocketLevel()) {
+                working = true;
                 (new RocketHatchL2()).start();
             } else if (Robot.competitionController.getIntakeHatch3RocketLevel()) {
+                working = true;
                 (new RocketHatchL3()).start();
             } else if (Robot.competitionController.getIntakeCargoShipLevel()) {
+                working = true;
                 (new CargoShipCargo()).start();
             } else if (Robot.competitionController.getIntakeLowestLevel()) {
+                working = true;
                 (new IntakeBaseLevel()).start();
             } else if (Robot.competitionController.getHatchIntake()) {
+                working = true;
                 (new GetHatchIntake()).start();
             } else if (Robot.competitionController.getHatchPlace()) {
+                working = true;
                 (new GetHatchPlace()).start();
+            } else {
+                working = false;
             }
+
             Robot.elevator.PIDLift();
         }
         else if (Robot.elevator.elevatorStateMachine== Elevator.ElevatorStateMachine.MANUAL) {
