@@ -6,20 +6,21 @@ import edu.wpi.first.wpilibj.XboxController;
 
 public class ManualController {
 
-    XboxController xbox = new XboxController(0);
+    XboxController xboxDrive = new XboxController(0);
+    XboxController xboxElevator = new XboxController(1);
     GenericHID.Hand rightStick = GenericHID.Hand.kRight;
     GenericHID.Hand leftStick = GenericHID.Hand.kLeft;
 
 
-    public double getDriveX() { return xbox.getX(leftStick); }
-    public double getDriveY() { return -xbox.getY(leftStick); }
+    public double getDriveX() { return xboxDrive.getX(rightStick); }
+    public double getDriveY() { return -xboxDrive.getY(leftStick); }
 
-    public boolean getCargoIntake() { return xbox.getBumper(leftStick); }
-    public boolean getLaunch() { return xbox.getBumper(rightStick); }
+    public boolean getCargoIntake() { return xboxDrive.getBumper(rightStick); }
+    public boolean getLaunch() { return xboxDrive.getBumper(leftStick); }
 
-    public double getElevator() { return -xbox.getY(rightStick); }
+    public double getElevator() { return -xboxElevator.getY(rightStick); }
 
-    public double getCargoIntakeWrist() { return xbox.getX(rightStick); }
+    public double getCargoIntakeWrist() { return xboxElevator.getX(rightStick); }
 
 
 

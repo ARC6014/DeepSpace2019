@@ -32,8 +32,8 @@ public class Drive extends PIDSubsystem {
   Encoder driveRightEncoder = new Encoder(RobotMap.driveRightEncoderA, RobotMap.driveRightEncoderB, false, Encoder.EncodingType.k4X);
   Encoder driveLeftEncoder = new Encoder(RobotMap.driveLeftEncoderA, RobotMap.driveLeftEncoderB, false, Encoder.EncodingType.k4X);
 
-  private final int leftEncoderCPR = 2048 * 4;  //Check the encoder values
-  private final int rightEncoderCPR = 2048 * 4; //Check the encoder values
+  private final int leftEncoderCPR = 2048;  //Check the encoder values
+  private final int rightEncoderCPR = 2048; //Check the encoder values
   private final double wheelDiameter = 4 * 2.54;
 
   private double maxSpeed = 1.0;

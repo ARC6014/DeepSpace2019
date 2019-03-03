@@ -12,7 +12,7 @@ import frc.robot.subsystems.Drive;
 
 public class TeleopDrive extends Command {
     public TeleopDrive() {
-
+        requires(Robot.drive);
     }
 
     @Override

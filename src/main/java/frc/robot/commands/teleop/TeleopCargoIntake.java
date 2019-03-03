@@ -7,7 +7,9 @@ import frc.robot.subsystems.CargoIntake;
 public class TeleopCargoIntake  extends Command{
     private double power;
 
-    public TeleopCargoIntake() {}
+    public TeleopCargoIntake() {
+        requires(Robot.cargoIntake);
+    }
 
     @Override
     protected void initialize() {}

@@ -19,7 +19,7 @@ import frc.robot.subsystems.Elevator;
 public class PIDElevator extends Command {
 
     public PIDElevator() {
-
+        requires(Robot.elevator);
     }
 
     @Override
