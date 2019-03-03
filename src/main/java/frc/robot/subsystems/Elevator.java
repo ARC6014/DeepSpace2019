@@ -37,7 +37,7 @@ public class Elevator extends PIDSubsystem {
   public final double maxHeight = 194.05; //Check
 
   PowerDistributionPanel pdp = new PowerDistributionPanel();
-
+//TODO: Integrate level calls for elevator; 8 levels total; possibly +/-
   public enum ElevatorStateMachine{
     DISABLED,
     MANUAL,

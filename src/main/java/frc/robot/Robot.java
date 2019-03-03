@@ -31,6 +31,7 @@ public class Robot extends TimedRobot {
   public static Drive drive = new Drive();
   public static Elevator elevator = new Elevator();
   public static ManualController manualControl = new ManualController();
+  public static CompetitionController competitionController = new CompetitionController();
   public static Pathfinding pathfinding = new Pathfinding();
 
   public static final double robotFrontalWidth = 0.615909;
