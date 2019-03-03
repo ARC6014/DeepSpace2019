@@ -66,6 +66,12 @@ public class PIDElevator extends Command {
                 (new RocketHatchL3()).start();
             } else if (Robot.competitionController.getIntakeCargoShipLevel()) {
                 (new CargoShipCargo()).start();
+            } else if (Robot.competitionController.getIntakeLowestLevel()) {
+                (new IntakeBaseLevel()).start();
+            } else if (Robot.competitionController.getHatchIntake()) {
+                (new GetHatchIntake()).start();
+            } else if (Robot.competitionController.getHatchPlace()) {
+                (new GetHatchPlace()).start();
             }
             Robot.elevator.PIDLift();
         }

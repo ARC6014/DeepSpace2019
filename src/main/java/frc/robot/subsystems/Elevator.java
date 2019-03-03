@@ -88,7 +88,7 @@ public class Elevator extends PIDSubsystem {
   }
 
   public boolean getElevatorSwitchStatus() {
-    return elevatorBottomSwitch.get();
+    return !elevatorBottomSwitch.get();
   }
 
   @Override

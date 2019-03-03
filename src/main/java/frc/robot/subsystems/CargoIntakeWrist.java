@@ -77,7 +77,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
   }
 
   public boolean getCargoSwitchStatus() {
-    return cargoIntakeWristBottomSwitch.get();
+    return !cargoIntakeWristBottomSwitch.get();
   }
 
 
