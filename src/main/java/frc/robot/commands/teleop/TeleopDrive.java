@@ -23,7 +23,7 @@ public class TeleopDrive extends Command {
     protected void execute() {
 
         if (Robot.drive.driveStateMachine == Drive.DriveStateMachine.MANUAL){
-            Robot.drive.arcadeDrive(Robot.manualControl.getDriveY(),Robot.manualControl.getDriveX());
+            Robot.drive.arcadeDrive(Robot.competitionController.getDriveY(),Robot.competitionController.getDriveX());
         }
     }
 
