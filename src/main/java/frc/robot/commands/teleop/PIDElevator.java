@@ -8,9 +8,11 @@
 package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.Robot;
 import frc.robot.subsystems.CargoIntakeWrist;
 import frc.robot.subsystems.Elevator;
+import frc.robot.commandgroups.*;
 
 
 /**
@@ -38,11 +40,25 @@ public class PIDElevator extends Command {
         }
 
         if (Robot.elevator.elevatorStateMachine == Elevator.ElevatorStateMachine.PID ){
+            if (Robot.competitionController.getIntakeCargo1RocketLevel()) {
+                (new RocketCargoL1()).start();
+            } else if (Robot.competitionController.getIntakeCargo2RocketLevel()) {
+                (new RocketCargoL2()).start();
+            } else if (Robot.competitionController.getIntakeCargo3RocketLevel()) {
+                (new RocketCargoL3()).start();
+            } else if (Robot.competitionController.getIntakeHatch1RocketLevel()) {
+                (new RocketHatchL1()).start();
+            } else if (Robot.competitionController.getIntakeHatch2RocketLevel()) {
+                (new RocketHatchL2()).start();
+            } else if (Robot.competitionController.getIntakeHatch3RocketLevel()) {
+                (new RocketHatchL3()).start();
+            } else if (Robot.competitionController.getIntakeCargoShipLevel()) {
+                (new CargoShipCargo()).start();
+            }
             Robot.elevator.PIDLift();
         }
-        else if (Robot.elevator.elevatorStateMachine== Elevator.ElevatorStateMachine.MANUAL){
-            Robot.elevator.setElevatorSpeed (Robot.manualControl.getElevator());
-
+        else if (Robot.elevator.elevatorStateMachine== Elevator.ElevatorStateMachine.MANUAL) {
+//            Robot.elevator.setElevatorSpeed (Robot.manualControl.getElevator());
         }
 
     }

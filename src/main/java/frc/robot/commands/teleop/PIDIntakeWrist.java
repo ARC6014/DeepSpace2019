@@ -42,7 +42,7 @@ public class PIDIntakeWrist extends Command {
             Robot.cargoIntakeWrist.PIDRotate();
         }
         else if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine== CargoIntakeWrist.CargoIntakeWristStateMachine.MANUAL){
-            Robot.cargoIntakeWrist.setWristSpeed(Robot.manualControl.getCargoIntakeWrist() * 0.5);
+            Robot.cargoIntakeWrist.setWristSpeed(Robot.competitionController.getCargoIntakeWrist() * 0.5);
         }
     }
 
