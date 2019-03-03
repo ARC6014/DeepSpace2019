@@ -20,6 +20,7 @@ import frc.robot.commandgroups.*;
  */
 public class PIDElevator extends Command {
     private boolean switcher = false;
+    private boolean resetStatus = false;
 
     public PIDElevator() {
         requires(Robot.elevator);
@@ -54,29 +55,52 @@ public class PIDElevator extends Command {
         if (Robot.elevator.elevatorStateMachine == Elevator.ElevatorStateMachine.PID ){
 
             if (Robot.elevator.getElevatorSwitchStatus()) {
-                Robot.elevator.resetEncoder();
+                if (resetStatus = false) {
+                    Robot.elevator.resetEncoder();
+                    Robot.elevator.setSetpoint(Robot.elevator.baseToIntakeHeight);
+                    resetStatus = true;
+                }
+                if (resetStatus && !Robot.elevator.getElevatorSwitchStatus()) {
+                    resetStatus = false;
+                }
             }
 
             if (Robot.competitionController.getIntakeCargo1RocketLevel()) {
+                Robot.elevatorActive = true;
                 (new RocketCargoL1()).start();
             } else if (Robot.competitionController.getIntakeCargo2RocketLevel()) {
+                Robot.elevatorActive = true;
                 (new RocketCargoL2()).start();
             } else if (Robot.competitionController.getIntakeCargo3RocketLevel()) {
+                Robot.elevatorActive = true;
                 (new RocketCargoL3()).start();
             } else if (Robot.competitionController.getIntakeHatch1RocketLevel()) {
+                Robot.elevatorActive = true;
                 (new RocketHatchL1()).start();
             } else if (Robot.competitionController.getIntakeHatch2RocketLevel()) {
+                Robot.elevatorActive = true;
                 (new RocketHatchL2()).start();
             } else if (Robot.competitionController.getIntakeHatch3RocketLevel()) {
+                Robot.elevatorActive = true;
                 (new RocketHatchL3()).start();
             } else if (Robot.competitionController.getIntakeCargoShipLevel()) {
+                Robot.elevatorActive = true;
                 (new CargoShipCargo()).start();
             } else if (Robot.competitionController.getIntakeLowestLevel()) {
+                Robot.elevatorActive = true;
                 (new IntakeBaseLevel()).start();
             } else if (Robot.competitionController.getHatchIntake()) {
-                (new GetHatchIntake()).start();
+                if(!Robot.elevatorActive) {
+                    (new GetHatchIntake()).start();
+                }
+                Robot.elevatorActive = true;
             } else if (Robot.competitionController.getHatchPlace()) {
-                (new GetHatchPlace()).start();
+                if(!Robot.elevatorActive){
+                    (new GetHatchPlace()).start();
+                }
+                Robot.elevatorActive = true;
+            } else {
+                Robot.elevatorActive = false;
             }
             Robot.elevator.PIDLift();
         }

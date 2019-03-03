@@ -23,7 +23,7 @@ public class LiftElevator extends Command {
 
     @Override
     protected void initialize() {
-        Robot.elevator.setSetpoint(height);
+            Robot.elevator.setSetpoint(height);
     }
 
     @Override

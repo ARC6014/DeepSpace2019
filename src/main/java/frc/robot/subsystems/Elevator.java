@@ -69,7 +69,7 @@ public class Elevator extends PIDSubsystem {
     if (elevatorBottomSwitch.get()){
       //resetEncoder();
     }
-
+    SmartDashboard.putNumber("SetPoint", getSetpoint());
     SmartDashboard.putBoolean("ElevatorBottomSwitch", getElevatorSwitchStatus());
     SmartDashboard.putNumber("ElevatorHeight", elevatorHeightCm());
     SmartDashboard.putNumber("ElevatorMotor",elevatorMotor.getMotorOutputPercent());
@@ -108,9 +108,24 @@ public class Elevator extends PIDSubsystem {
   public void setElevatorSpeed(double speed) {
 
     double elevatorConstantSpeed = 0.16;
-    speed = elevatorConstantSpeed + (1-elevatorConstantSpeed)*speed;
-    elevatorMotor.set(ControlMode.PercentOutput, speed);
 
+    speed = elevatorConstantSpeed + (1-elevatorConstantSpeed)*speed;
+
+    if (speed < 0 ) {
+      speed = speed * 0.7;
+      elevatorMotor.set(ControlMode.PercentOutput, speed);
+    } else {
+      elevatorMotor.set(ControlMode.PercentOutput, speed);
+    }
+
+
+    /*
+    if (speed < elevatorConstantSpeed && elevatorHeightCm() < baseToIntakeHeight + 5) {
+      elevatorMotor.set(ControlMode.PercentOutput, (elevatorHeightCm() - baseToIntakeHeight)/5 * speed);
+    } else {
+      elevatorMotor.set(ControlMode.PercentOutput, speed);
+    }
+    */
     /*if (speed < 0 && elevatorHeightCm() < baseToIntakeHeight + 15) {
       elevatorMotor.set(ControlMode.PercentOutput, (elevatorHeightCm() - baseToIntakeHeight)/10 * speed);
     } else if (speed > 0 && elevatorHeightCm() > maxHeight - 15) {

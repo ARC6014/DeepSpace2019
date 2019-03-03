@@ -10,12 +10,14 @@ import frc.robot.commands.TimedDrive;
 public class GetHatchPlace extends CommandGroup {
 
     public GetHatchPlace() {
-        if (Robot.elevator.elevatorHeightCm() - 10 > Robot.elevator.baseToIntakeHeight) {
+        if (Robot.elevator.elevatorHeightCm() - 5 > Robot.elevator.baseToIntakeHeight && !Robot.elevatorActive) {
+            Robot.elevatorActive = true;
             addSequential(new DropHatch());
-            addSequential(new Delay(0.5));
+            addSequential(new Delay(0.3));
             addSequential(new TimedDrive(0, -0.8,0.3));
-            addSequential(new Delay(0.5));
-            addSequential(new LiftElevator(Robot.elevator.getSetpoint() + 10));
+            addSequential(new Delay(0.3));
+            addSequential(new RocketHatchL1());
+            Robot.elevatorActive = false;
         }
     }
 }
