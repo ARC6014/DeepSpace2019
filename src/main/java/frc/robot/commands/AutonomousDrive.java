@@ -17,8 +17,6 @@ import jaci.pathfinder.Waypoint;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.PathfinderFRC;
 
-
-
 public class AutonomousDrive extends Command {
     //Works for a single object placement only
     // startPositionID: 0 1L, 1 1C, 2 1R, 3 2L, 4 2R, 5 3C, assumes robot won't fall off, thus, use 0, 1, 2 preferrably
