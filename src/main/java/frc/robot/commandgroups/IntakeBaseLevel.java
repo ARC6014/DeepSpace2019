@@ -7,6 +7,6 @@ import frc.robot.commands.LiftElevator;
 public class IntakeBaseLevel extends CommandGroup {
 
     public IntakeBaseLevel() {
-        addSequential(new LiftElevator(Robot.elevator.baseToIntakeHeight + 3));
+        addSequential(new LiftElevator(Robot.elevator.baseToIntakeHeight + 2));
     }
 }
