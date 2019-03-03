@@ -3,18 +3,18 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
+import java.util.concurrent.TimeUnit;
+
 public class Testing extends Command {
     @Override
     protected void initialize() {
-        setTimeout(5);
+        setTimeout(Robot.dt);
     }
 
     @Override
     protected void execute() {
         Robot.drive.arcadeDrive(1,0);
 
-        Robot.positions.get(0).add((Robot.drive.getLeftEncoderRev()*Robot.encoderTicksPerRev));
-        Robot.positions.get(1).add((Robot.drive.getRightEncoderRev()*Robot.encoderTicksPerRev));
     }
 
     @Override
@@ -24,7 +24,7 @@ public class Testing extends Command {
 
     @Override
     protected void end() {
-        Robot.drive.arcadeDrive(0,0);
+
     }
 
     @Override
