@@ -7,12 +7,9 @@
 
 package frc.robot.commands.teleop;
 
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.CargoIntake;
 import frc.robot.subsystems.CargoIntakeWrist;
-import frc.robot.subsystems.Elevator;
 
 
 /**
@@ -54,7 +51,9 @@ public class PIDIntakeWrist extends Command {
             Robot.cargoIntakeWrist.PIDRotate();
             //            Robot.elevator.setElevatorSpeed (Robot.competitionController.getCargoIntakeWrist());
         }
-        else if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine== CargoIntakeWrist.CargoIntakeWristStateMachine.MANUAL){ }
+        else if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine== CargoIntakeWrist.CargoIntakeWristStateMachine.MANUAL){
+            Robot.cargoIntakeWrist.setWristSpeed(Robot.competitionController.getCargoIntakeWrist() * 0.4);
+        }
     }
 
     @Override
