@@ -3,6 +3,8 @@ package frc.robot.commandgroups;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.Testing;
+
+import java.io.*;
 import java.util.ArrayList;
 
 public class MaxValuesDetermine extends CommandGroup{
@@ -51,7 +53,33 @@ public class MaxValuesDetermine extends CommandGroup{
             }
         }
 
-        // DRIVE OUTPUT ALL VALUES ONTO A FILE
-        //
+        try
+        {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("/home/lvuser/deploy/testData.txt"));
+            writer.newLine();
+            writer.write(Robot.positions.get(0).toString());
+            writer.newLine();
+            writer.write(Robot.positions.get(1).toString());
+            writer.newLine();
+            writer.write(position.toString());
+            writer.newLine();
+            writer.write(velocity.toString());
+            writer.newLine();
+            writer.write(acceleration.toString());
+            writer.newLine();
+            writer.write(jerk.toString());
+            writer.newLine();
+            writer.write(String.valueOf(maxVel));
+            writer.newLine();
+            writer.write(String.valueOf(maxAcc));
+            writer.newLine();
+            writer.write(String.valueOf(maxJerk));
+            writer.newLine();
+            writer.close();
+        } catch (IOException e) {
+            //ERROR
+        }
+
+
     }
 }
