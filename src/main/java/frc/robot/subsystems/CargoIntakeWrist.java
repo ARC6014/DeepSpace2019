@@ -29,7 +29,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
   DigitalInput cargoIntakeWristBottomSwitch = new DigitalInput(RobotMap.cargoIntakeWristBottomSwitch);
 
   double maxWristAngle = 130;
-  private final int encoderCPR = 2048 * 4;
+  private final int encoderCPR = 2048;
   private final double outputRatio = 5.0;
 
   public enum CargoIntakeWristStateMachine{
@@ -44,7 +44,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
     setAbsoluteTolerance(1);
     getPIDController().setInputRange(0,maxWristAngle);
     getPIDController().setOutputRange(-1,1);
-    cargoIntakeWristLeftMotor.setInverted(true);
+    cargoIntakeWristRightMotor.setInverted(true);
     cargoIntakeWristLeftMotor.follow(cargoIntakeWristRightMotor);
   }
   @Override
@@ -55,13 +55,13 @@ public class CargoIntakeWrist extends PIDSubsystem {
   @Override
   public void periodic() {
     if(cargoIntakeWristBottomSwitch.get()){
-      resetEncoder();
+      //resetEncoder();
     }
 
 
     SmartDashboard.putNumber("CargoWristMotor", cargoIntakeWristRightMotor.getMotorOutputPercent());
     SmartDashboard.putNumber("WristAngle", getWristAngle());
-    SmartDashboard.putBoolean("CargoIntakeParallel", getCargoSwitchStatus());
+    SmartDashboard.putBoolean("CargoIntakeWristSwitch", getCargoSwitchStatus());
   }
 
   public void resetEncoder() {
@@ -100,10 +100,14 @@ public class CargoIntakeWrist extends PIDSubsystem {
   }
 
   public void setWristSpeed(double speed) {
+    cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, speed*0.5);
+
+    /*
     if (speed < 0 && getWristAngle() < 5) {
       cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, getWristAngle()/5 * speed);
     } else {
       cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, speed);
     }
+    */
   }
 }

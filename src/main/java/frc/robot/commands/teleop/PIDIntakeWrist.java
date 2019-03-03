@@ -21,6 +21,7 @@ import frc.robot.subsystems.Elevator;
 public class PIDIntakeWrist extends Command {
 
     public PIDIntakeWrist() {
+        requires(Robot.cargoIntakeWrist);
     }
 
     @Override
@@ -41,8 +42,8 @@ public class PIDIntakeWrist extends Command {
             Robot.cargoIntakeWrist.PIDRotate();
         }
         else if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine== CargoIntakeWrist.CargoIntakeWristStateMachine.MANUAL){
-            Robot.cargoIntakeWrist.setWristSpeed(Robot.manualControl.getCargoIntakeWrist());
-    }
+            Robot.cargoIntakeWrist.setWristSpeed(Robot.manualControl.getCargoIntakeWrist() * 0.5);
+        }
     }
 
     @Override
