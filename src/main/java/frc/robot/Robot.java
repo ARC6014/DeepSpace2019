@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
 
     //m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", chooser);
+    //SmartDashboard.putData("Auto mode", chooser);
   }
 
   /**
@@ -111,9 +111,9 @@ public class Robot extends TimedRobot {
      */
 
     // schedule the autonomous command (example)
-    if (autonomousCommand != null) {
+    /*if (autonomousCommand != null) {
       autonomousCommand.start();
-    }
+    }*/
   }
 
   /**

@@ -28,6 +28,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
   Encoder cargoIntakeWristEncoder = new Encoder(RobotMap.cargoIntakeWristEncoderA, RobotMap.cargoIntakeWristEncoderB, false, Encoder.EncodingType.k4X);
   DigitalInput cargoIntakeWristBottomSwitch = new DigitalInput(RobotMap.cargoIntakeWristBottomSwitch);
 
+  boolean switchPressed = false;
   double maxWristAngle = 130;
   private final int encoderCPR = 2048;
   private final double outputRatio = 5.0;
@@ -55,7 +56,8 @@ public class CargoIntakeWrist extends PIDSubsystem {
   @Override
   public void periodic() {
     if(cargoIntakeWristBottomSwitch.get()){
-      //resetEncoder();
+      switchPressed=true;
+      resetEncoder();
     }
 
 
@@ -73,7 +75,10 @@ public class CargoIntakeWrist extends PIDSubsystem {
   }
 
   public double getWristAngle() {
-    return getEncoderRev() / outputRatio * 360;
+    if(switchPressed) {
+      return getEncoderRev() / outputRatio * 360;
+    }
+    return maxWristAngle + (getEncoderRev() / outputRatio * 360);
   }
 
   public boolean getCargoSwitchStatus() {
