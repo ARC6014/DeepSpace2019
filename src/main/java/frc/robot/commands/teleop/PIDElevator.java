@@ -10,6 +10,7 @@ package frc.robot.commands.teleop;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.Robot;
+import frc.robot.commands.FreeElevator;
 import frc.robot.subsystems.CargoIntakeWrist;
 import frc.robot.subsystems.Elevator;
 import frc.robot.commandgroups.*;
@@ -53,17 +54,6 @@ public class PIDElevator extends Command {
         }
 
         if (Robot.elevator.elevatorStateMachine == Elevator.ElevatorStateMachine.PID ){
-
-            if (Robot.elevator.getElevatorSwitchStatus()) {
-                if (resetStatus = false) {
-                    Robot.elevator.resetEncoder();
-                    Robot.elevator.setSetpoint(Robot.elevator.baseToIntakeHeight);
-                    resetStatus = true;
-                }
-                if (resetStatus && !Robot.elevator.getElevatorSwitchStatus()) {
-                    resetStatus = false;
-                }
-            }
 
             if (Robot.competitionController.getIntakeCargo1RocketLevel()) {
                 if(!Robot.elevatorActive) {

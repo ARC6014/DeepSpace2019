@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.LiftElevator;
 
 public class RocketHatchL3 extends CommandGroup {
-    private final double hatchHeight = 190;
+    private final double hatchHeight = 192;
 
     public RocketHatchL3() {
         addSequential(new LiftElevator(hatchHeight));

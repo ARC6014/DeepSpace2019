@@ -13,8 +13,11 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.teleop.PIDIntakeWrist;
+
+import javax.sql.rowset.serial.SerialArray;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
@@ -29,9 +32,21 @@ public class CargoIntakeWrist extends PIDSubsystem {
   DigitalInput cargoIntakeWristBottomSwitch = new DigitalInput(RobotMap.cargoIntakeWristBottomSwitch);
 
   boolean switchPressed = false;
-  double maxWristAngle = 130;
+  private static final double maxWristAngle = 114;
+  //private static final double feedForward = 0.1;
   private final int encoderCPR = 2048;
   private final double outputRatio = 5.0;
+
+  private static final double armMass = 5;
+  private static final double dToCM = 0.325;
+  private static final double stallTorque = 0.71;
+  private static final double g = 9.81;
+  private static final double armWeight = g * armMass;
+  private static final double noOfMotors = 2;
+  private static final double gearRatio = 208.33;
+  private static final double feedForward =armWeight * dToCM / stallTorque * noOfMotors * gearRatio;
+  private static boolean atStart = true;
+  public double startFallAngle;
 
   public enum CargoIntakeWristStateMachine{
     DISABLED,
@@ -41,7 +56,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
   public CargoIntakeWristStateMachine cargoIntakeWristStateMachine = CargoIntakeWristStateMachine.MANUAL;
 
   public CargoIntakeWrist() {
-    super(0,0,0);
+    super(0,0,0,feedForward*Math.cos(maxWristAngle),50);
     setAbsoluteTolerance(1);
     getPIDController().setInputRange(0,maxWristAngle);
     getPIDController().setOutputRange(-1,1);
@@ -55,15 +70,20 @@ public class CargoIntakeWrist extends PIDSubsystem {
 
   @Override
   public void periodic() {
-    if(cargoIntakeWristBottomSwitch.get()){
+    if(getCargoSwitchStatus()){
       switchPressed=true;
       resetEncoder();
     }
+    setF();
 
-
+    SmartDashboard.putNumber("StartAngle", startFallAngle);
     SmartDashboard.putNumber("CargoWristMotor", cargoIntakeWristRightMotor.getMotorOutputPercent());
     SmartDashboard.putNumber("WristAngle", getWristAngle());
     SmartDashboard.putBoolean("CargoIntakeWristSwitch", getCargoSwitchStatus());
+  }
+
+  public void setF() {
+    this.getPIDController().setF(feedForward*Math.cos(getWristAngle()));
   }
 
   public void resetEncoder() {
@@ -75,6 +95,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
   }
 
   public double getWristAngle() {
+    //return getEncoderRev() / outputRatio * 360;
     if(switchPressed) {
       return getEncoderRev() / outputRatio * 360;
     }
@@ -101,11 +122,18 @@ public class CargoIntakeWrist extends PIDSubsystem {
   }
 
   public void PIDRotate() {
-    setWristSpeed(outPID);
+    setWristSpeed(-outPID);
   }
 
   public void setWristSpeed(double speed) {
-    cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, speed*0.5);
+
+    if (getWristAngle() < 70) {
+      cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, (speed * 0.2) - 0.145);
+    } else if (speed > 0.0 ) {
+      cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, (speed ) * 0.2 - 0.145);
+    } else if (speed <= 0.0) {
+      cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, 0.0);
+    }
 
     /*
     if (speed < 0 && getWristAngle() < 5) {

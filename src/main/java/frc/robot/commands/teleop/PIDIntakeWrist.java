@@ -52,7 +52,7 @@ public class PIDIntakeWrist extends Command {
             //            Robot.elevator.setElevatorSpeed (Robot.competitionController.getCargoIntakeWrist());
         }
         else if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine== CargoIntakeWrist.CargoIntakeWristStateMachine.MANUAL){
-            Robot.cargoIntakeWrist.setWristSpeed(Robot.competitionController.getCargoIntakeWrist() * 0.4);
+            Robot.cargoIntakeWrist.setWristSpeed(Robot.competitionController.getCargoIntakeWrist() * 0.6);
         }
     }
 

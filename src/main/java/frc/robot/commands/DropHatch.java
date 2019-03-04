@@ -16,7 +16,7 @@ public class DropHatch extends Command {
 
     @Override
     public void execute() {
-        Robot.elevator.setSetpoint(Robot.elevator.getSetpoint()-7);
+        Robot.elevator.setSetpoint(Robot.elevator.getSetpoint()-10);
     }
 
     @Override
