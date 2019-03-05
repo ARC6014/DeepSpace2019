@@ -16,7 +16,7 @@ public class LiftHatch extends Command {
 
     @Override
     public void execute() {
-        Robot.elevator.setSetpoint(Robot.elevator.getSetpoint()+15);
+        Robot.elevator.setSetpoint(Robot.elevator.getSetpoint()+22);
     }
 
     @Override
