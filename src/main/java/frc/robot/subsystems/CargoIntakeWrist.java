@@ -129,11 +129,23 @@ public class CargoIntakeWrist extends PIDSubsystem {
 
     if (getWristAngle() < 70) {
       cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, (speed * 0.2) - 0.145);
+    } else if (speed > 0.0 && getWristAngle() > 70) {
+      cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, (speed ) * 0.4);
+    } else if (speed > 0.0) {
+      cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, (speed ) * 0.2 - 0.145);
+    } else if (speed <= 0.0) {
+      cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, 0.0);
+    }
+
+    /*
+    if (getWristAngle() < 70) {
+      cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, (speed * 0.2) - 0.145);
     } else if (speed > 0.0 ) {
       cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, (speed ) * 0.2 - 0.145);
     } else if (speed <= 0.0) {
       cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, 0.0);
     }
+    */
 
     /*
     if (speed < 0 && getWristAngle() < 5) {
