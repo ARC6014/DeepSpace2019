@@ -37,6 +37,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
   private final int encoderCPR = 2048;
   private final double outputRatio = 5.0;
 
+  private static final double wristStallOutput = -0.22;
   private static final double armMass = 5;
   private static final double dToCM = 0.325;
   private static final double stallTorque = 0.71;
@@ -80,6 +81,8 @@ public class CargoIntakeWrist extends PIDSubsystem {
     SmartDashboard.putNumber("CargoWristMotor", cargoIntakeWristRightMotor.getMotorOutputPercent());
     SmartDashboard.putNumber("WristAngle", getWristAngle());
     SmartDashboard.putBoolean("CargoIntakeWristSwitch", getCargoSwitchStatus());
+    SmartDashboard.putNumber("CargoStallSpeed", stallSpeed);
+    SmartDashboard.putNumber("CargoStallCalc", Math.cos(Math.toRadians(getWristAngle())));
   }
 
   public void setF() {
@@ -125,17 +128,27 @@ public class CargoIntakeWrist extends PIDSubsystem {
     setWristSpeed(-outPID);
   }
 
+
+  double stallSpeed = wristStallOutput * Math.cos(Math.toRadians(getWristAngle()));
+
   public void setWristSpeed(double speed) {
 
+    double stallSpeed = wristStallOutput * Math.cos(Math.toRadians(getWristAngle()));
+    cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, (speed * 0.3) + wristStallOutput * Math.cos(Math.toRadians(getWristAngle())));
+
+
+
+    /*
     if (getWristAngle() < 70) {
-      cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, (speed * 0.2) - 0.145);
+      cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, (speed * 0.3) - 0.145);
     } else if (speed > 0.0 && getWristAngle() > 70) {
-      cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, (speed ) * 0.4);
+      cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, (speed ) * 0.5);
     } else if (speed > 0.0) {
-      cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, (speed ) * 0.2 - 0.145);
+      cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, (speed ) * 0.3 - 0.145);
     } else if (speed <= 0.0) {
       cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, 0.0);
     }
+    */
 
     /*
     if (getWristAngle() < 70) {
