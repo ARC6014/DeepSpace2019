@@ -110,8 +110,8 @@ public class PIDElevator extends Command {
             }
             Robot.elevator.PIDLift();
         }
-        else if (Robot.elevator.elevatorStateMachine== Elevator.ElevatorStateMachine.MANUAL) {
-            Robot.elevator.setElevatorSpeed (Robot.competitionController.getCargoIntakeWrist());
+        else if (Robot.elevator.elevatorStateMachine == Elevator.ElevatorStateMachine.MANUAL) {
+            Robot.elevator.setElevatorSpeedManual(Robot.competitionController.getCargoIntakeWrist());
         }
 
     }
