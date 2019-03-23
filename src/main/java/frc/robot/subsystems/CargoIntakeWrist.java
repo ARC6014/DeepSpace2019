@@ -54,10 +54,10 @@ public class CargoIntakeWrist extends PIDSubsystem {
     MANUAL,
     PID
   }
-  public CargoIntakeWristStateMachine cargoIntakeWristStateMachine = CargoIntakeWristStateMachine.MANUAL;
+  public CargoIntakeWristStateMachine cargoIntakeWristStateMachine = CargoIntakeWristStateMachine.PID;
 
   public CargoIntakeWrist() {
-    super(0,0,0,feedForward*Math.cos(maxWristAngle),50);
+    super(0.14,0,0.65,wristStallOutput * Math.cos(Math.toRadians(maxWristAngle)),0.02);
     setAbsoluteTolerance(1);
     getPIDController().setInputRange(0,maxWristAngle);
     getPIDController().setOutputRange(-1,1);
@@ -77,6 +77,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
     }
     setF();
 
+    SmartDashboard.putNumber("Intake Setpoint",getSetpoint());
     SmartDashboard.putNumber("StartAngle", startFallAngle);
     SmartDashboard.putNumber("CargoWristMotor", cargoIntakeWristRightMotor.getMotorOutputPercent());
     SmartDashboard.putNumber("WristAngle", getWristAngle());
@@ -86,7 +87,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
   }
 
   public void setF() {
-    this.getPIDController().setF(feedForward*Math.cos(getWristAngle()));
+    this.getPIDController().setF(wristStallOutput * Math.cos(Math.toRadians(getWristAngle())));
   }
 
   public void resetEncoder() {

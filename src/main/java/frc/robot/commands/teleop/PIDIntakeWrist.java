@@ -31,7 +31,7 @@ public class PIDIntakeWrist extends Command {
     protected void execute() {
         if (Robot.competitionController.switchModes() && !switcher) {
             switcher = true;
-            if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine == CargoIntakeWrist.CargoIntakeWristStateMachine.PID ) {
+            if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine == CargoIntakeWrist.CargoIntakeWristStateMachine.PID) {
                 Robot.cargoIntakeWrist.cargoIntakeWristStateMachine = CargoIntakeWrist.CargoIntakeWristStateMachine.MANUAL;
             } else if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine == CargoIntakeWrist.CargoIntakeWristStateMachine.MANUAL) {
                 Robot.cargoIntakeWrist.cargoIntakeWristStateMachine = CargoIntakeWrist.CargoIntakeWristStateMachine.PID;
@@ -50,6 +50,11 @@ public class PIDIntakeWrist extends Command {
         if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine == CargoIntakeWrist.CargoIntakeWristStateMachine.PID ){
             Robot.cargoIntakeWrist.PIDRotate();
             //            Robot.elevator.setElevatorSpeed (Robot.competitionController.getCargoIntakeWrist());
+            if (Robot.competitionController.getToSetAngle30()) {
+                Robot.cargoIntakeWrist.setWristAngle(30);
+            } else if (Robot.competitionController.getToSetAngle70()) {
+                Robot.cargoIntakeWrist.setWristAngle(70);
+            }
         }
         else if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine== CargoIntakeWrist.CargoIntakeWristStateMachine.MANUAL){
             Robot.cargoIntakeWrist.setWristSpeed(Robot.competitionController.getCargoIntakeWrist() * 0.6);
