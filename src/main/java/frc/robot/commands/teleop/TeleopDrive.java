@@ -1,15 +1,10 @@
 package frc.robot.commands.teleop;
 
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotMap;
 import frc.robot.Robot;
-import frc.robot.subsystems.CargoIntakeWrist;
+import frc.robot.commands.TurnToAngle;
 import frc.robot.subsystems.Drive;
-import frc.robot.subsystems.Rotator;
 
 
 public class TeleopDrive extends Command {
@@ -26,11 +21,17 @@ public class TeleopDrive extends Command {
 
         if (Robot.drive.driveStateMachine == Drive.DriveStateMachine.MANUAL){
             Robot.drive.arcadeDrive(Robot.competitionController.getDriveX() * 0.8, Robot.competitionController.getDriveY());
+
+            if(Robot.competitionController.getTurnToAngle30()) {
+                (new TurnToAngle(1.2, 0.8, 30)).start();
+            }
+
+            if(Robot.competitionController.getTurnToAngle90()) {
+                (new TurnToAngle(1.2, 0.8, 90)).start();
+            }
+
         } else if (Robot.drive.driveStateMachine == Drive.DriveStateMachine.PID) {
-            Robot.rotator.setAngle(Robot.competitionController.getDriveY());
-            Robot.rotator.pidDrive(Robot.competitionController.getDriveX() * 0.8);
-            if(Robot.competitionController.getTurnToAngle30()) {Robot.rotator.setAngle(30);}
-            else if(Robot.competitionController.getTurnToAngle90()) {Robot.rotator.setAngle(90);}
+
         }
     }
 
