@@ -25,8 +25,12 @@ public class TeleopDrive extends Command {
     protected void execute() {
 
         if (Robot.drive.driveStateMachine == Drive.DriveStateMachine.MANUAL){
-            Robot.rotator.setAngle(Robot.competitionController.getDriveX() * 0.8);
-            Robot.rotator.pidDrive(Robot.competitionController.getDriveY());
+            Robot.drive.arcadeDrive(Robot.competitionController.getDriveX() * 0.8, Robot.competitionController.getDriveY());
+        } else if (Robot.drive.driveStateMachine == Drive.DriveStateMachine.PID) {
+            Robot.rotator.setAngle(Robot.competitionController.getDriveY());
+            Robot.rotator.pidDrive(Robot.competitionController.getDriveX() * 0.8);
+            if(Robot.competitionController.getTurnToAngle30()) {Robot.rotator.setAngle(30);}
+            else if(Robot.competitionController.getTurnToAngle90()) {Robot.rotator.setAngle(90);}
         }
     }
 

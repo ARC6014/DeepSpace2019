@@ -40,8 +40,8 @@ public class Drive extends PIDSubsystem {
 
   public enum DriveStateMachine{
     DISABLED,
-    MANUAL
-
+    MANUAL,
+    PID
   }
   public DriveStateMachine driveStateMachine = DriveStateMachine.MANUAL;
 
