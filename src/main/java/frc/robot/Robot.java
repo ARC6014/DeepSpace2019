@@ -44,6 +44,7 @@ public class Robot extends TimedRobot {
   public static final double dt = 0.1;
   public static ArrayList<ArrayList<Double>> positions = new ArrayList<ArrayList<Double>>();
   public static boolean elevatorActive = false;
+  public static boolean doneDrivingTest = true;
 
   Command autonomousCommand;
   SendableChooser<Command> chooser = new SendableChooser<>();

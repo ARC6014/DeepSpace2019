@@ -17,6 +17,7 @@ public class MaxValuesDetermine extends CommandGroup{
 
         for(int i = 0; i < (testTime/dt); i++) {
             addSequential(new Testing());
+            while (!Robot.doneDrivingTest) {}
             Robot.positions.get(0).add((Robot.drive.getLeftEncoderRev() * Robot.encoderTicksPerRev));
             Robot.positions.get(1).add((Robot.drive.getRightEncoderRev() * Robot.encoderTicksPerRev));
         }

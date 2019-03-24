@@ -8,13 +8,13 @@ import java.util.concurrent.TimeUnit;
 public class Testing extends Command {
     @Override
     protected void initialize() {
+        Robot.doneDrivingTest = false;
         setTimeout(Robot.dt);
     }
 
     @Override
     protected void execute() {
         Robot.drive.arcadeDrive(1,0);
-
     }
 
     @Override
@@ -24,7 +24,7 @@ public class Testing extends Command {
 
     @Override
     protected void end() {
-
+        Robot.doneDrivingTest = true;
     }
 
     @Override
