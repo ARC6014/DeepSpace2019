@@ -9,6 +9,8 @@ import frc.robot.RobotMap;
 import frc.robot.Robot;
 import frc.robot.subsystems.CargoIntakeWrist;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Rotator;
+
 
 public class TeleopDrive extends Command {
     public TeleopDrive() {
@@ -23,7 +25,8 @@ public class TeleopDrive extends Command {
     protected void execute() {
 
         if (Robot.drive.driveStateMachine == Drive.DriveStateMachine.MANUAL){
-            Robot.drive.arcadeDrive(Robot.competitionController.getDriveY(),Robot.competitionController.getDriveX() * 0.8);
+            Robot.rotator.setAngle(Robot.competitionController.getDriveX() * 0.8);
+            Robot.rotator.pidDrive(Robot.competitionController.getDriveY());
         }
     }
 
