@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commandgroups.AutonomousReader;
+import frc.robot.commands.Calibrator;
 import frc.robot.subsystems.*;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.cscore.UsbCamera;
@@ -60,9 +62,12 @@ public class Robot extends TimedRobot {
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
     camera.setVideoMode(VideoMode.PixelFormat.kMJPEG,320, 240,120);
 
-    //m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
-    // chooser.addOption("My Auto", new MyAutoCommand());
-    //SmartDashboard.putData("Auto mode", chooser);
+    chooser.addOption("Collect Driving Data", new Calibrator());
+    chooser.addOption("Data-based Drive", new AutonomousReader());
+
+    //chooser.setDefaultOption("Default Auto", new ExampleCommand());
+    //chooser.addOption("My Auto", new MyAutoCommand());
+    SmartDashboard.putData("Auto Mode", chooser);
   }
 
   /**
@@ -112,11 +117,9 @@ public class Robot extends TimedRobot {
      * = new MyAutoCommand(); break; case "Default Auto": default:
      * autonomousCommand = new ExampleCommand(); break; }
      */
-
-    // schedule the autonomous command (example)
-    /*if (autonomousCommand != null) {
+    if (autonomousCommand != null) {
       autonomousCommand.start();
-    }*/
+    }
   }
 
   /**
