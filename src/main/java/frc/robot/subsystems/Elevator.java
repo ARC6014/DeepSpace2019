@@ -114,11 +114,14 @@ public class Elevator extends PIDSubsystem {
       speed = speed * 0.7;
       elevatorMotor.set(ControlMode.PercentOutput, speed);
     } else if (getSetpoint() == baseToIntakeHeight + 2 && speed > 0.08) {
-
       elevatorMotor.set(ControlMode.PercentOutput, 0);
     } else {
       elevatorMotor.set(ControlMode.PercentOutput, speed);
     }
+  }
+
+  public double getMotorSet() {
+    return elevatorMotor.getMotorOutputPercent();
   }
 
   public void setElevatorSpeed(double speed) {

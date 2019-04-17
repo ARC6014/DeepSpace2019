@@ -133,6 +133,10 @@ public class CargoIntakeWrist extends PIDSubsystem {
 
   double stallSpeed = wristStallOutput * Math.cos(Math.toRadians(getWristAngle()));
 
+  public double getMotorSet() {
+    return cargoIntakeWristRightMotor.getMotorOutputPercent();
+  }
+
   public void setWristSpeed(double speed) {
 
     double stallSpeed = wristStallOutput * Math.cos(Math.toRadians(getWristAngle()));

@@ -33,7 +33,11 @@ public class CargoIntake extends Subsystem {
 
   }
 
-  public void setIntakeSpeed(double speed) {
+  public double getMotorSet() {
+    return cargoIntakeMotor.getMotorOutputPercent();
+  }
+
+  public void setIntakeSpeed(double speed)  {
     cargoIntakeMotor.set(ControlMode.PercentOutput, speed);
   }
 }

@@ -43,6 +43,7 @@ public class Robot extends TimedRobot {
   public static final boolean usePathWeaver = true; //True -> Pathweaver; False -> Pathfinder
   public static final double dt = 0.1;
   public static ArrayList<ArrayList<Double>> positions = new ArrayList<ArrayList<Double>>();
+  public static ArrayList<ArrayList<Double>> motorValues = new ArrayList<ArrayList<Double>>();
   public static boolean elevatorActive = false;
   public static boolean doneDrivingTest = true;
 

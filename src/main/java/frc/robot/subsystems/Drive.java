@@ -171,7 +171,16 @@ public class Drive extends PIDSubsystem {
         right = speed - rotation;
       }
     }
+
     driveFrontRightMotor.set(ControlMode.PercentOutput, limit(right) * maxSpeed);
     driveFrontLeftMotor.set(ControlMode.PercentOutput, limit(left) * maxSpeed);
+  }
+
+  public double getLeftMotorSet() {
+    return driveFrontLeftMotor.getMotorOutputPercent();
+  }
+
+  public double getRightMotorSet() {
+    return driveFrontRightMotor.getMotorOutputPercent();
   }
 }
