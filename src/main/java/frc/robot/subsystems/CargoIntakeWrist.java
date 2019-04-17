@@ -54,7 +54,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
     MANUAL,
     PID
   }
-  public CargoIntakeWristStateMachine cargoIntakeWristStateMachine = CargoIntakeWristStateMachine.PID;
+  public CargoIntakeWristStateMachine cargoIntakeWristStateMachine = CargoIntakeWristStateMachine.MANUAL;
 
   public CargoIntakeWrist() {
     super(0.14,0,0.65,wristStallOutput * Math.cos(Math.toRadians(maxWristAngle)),0.02);

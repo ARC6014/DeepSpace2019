@@ -40,21 +40,22 @@ public class PIDIntakeWrist extends Command {
             switcher = false;
         }
 
+        if (Robot.competitionController.getToSetAngle30()) {
+            Robot.cargoIntakeWrist.setWristAngle(30);
+        } else if (Robot.competitionController.getToSetAngle70()) {
+            Robot.cargoIntakeWrist.setWristAngle(70);
+        }
+
         if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine == CargoIntakeWrist.CargoIntakeWristStateMachine.PID ){
             Robot.cargoIntakeWrist.enable();
         }
-        else{
+        else {
             Robot.cargoIntakeWrist.disable();
         }
 
         if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine == CargoIntakeWrist.CargoIntakeWristStateMachine.PID ){
             Robot.cargoIntakeWrist.PIDRotate();
-            //            Robot.elevator.setElevatorSpeed (Robot.competitionController.getCargoIntakeWrist());
-            if (Robot.competitionController.getToSetAngle30()) {
-                Robot.cargoIntakeWrist.setWristAngle(30);
-            } else if (Robot.competitionController.getToSetAngle70()) {
-                Robot.cargoIntakeWrist.setWristAngle(70);
-            }
+            //Robot.elevator.setElevatorSpeed (Robot.competitionController.getCargoIntakeWrist());
         }
         else if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine== CargoIntakeWrist.CargoIntakeWristStateMachine.MANUAL){
             Robot.cargoIntakeWrist.setWristSpeed(Robot.competitionController.getCargoIntakeWrist() * 0.6);

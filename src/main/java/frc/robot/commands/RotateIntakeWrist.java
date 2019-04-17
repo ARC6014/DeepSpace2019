@@ -7,8 +7,11 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.CargoIntake;
+import frc.robot.subsystems.CargoIntakeWrist;
 
 
 /**
@@ -16,6 +19,7 @@ import frc.robot.Robot;
  */
 public class RotateIntakeWrist extends Command {
     private double angle;
+    private double startTime;
 
     public RotateIntakeWrist(double angle) {
         this.angle = angle;
@@ -24,23 +28,31 @@ public class RotateIntakeWrist extends Command {
     @Override
     protected void initialize() {
         Robot.cargoIntakeWrist.setWristAngle(angle);
+        Robot.cargoIntakeWrist.cargoIntakeWristStateMachine = CargoIntakeWrist.CargoIntakeWristStateMachine.PID;
     }
 
     @Override
     protected void execute() {
-
     }
 
     @Override
     protected boolean isFinished() {
-        return true;
+         if (Timer.getFPGATimestamp()-startTime >= 0.5) {
+             return true;
+         }
+         if(!Robot.cargoIntakeWrist.onTarget()) {
+             startTime = Timer.getFPGATimestamp();
+         }
+         return false;
     }
 
     @Override
     protected void end() {
+        Robot.cargoIntakeWrist.cargoIntakeWristStateMachine = CargoIntakeWrist.CargoIntakeWristStateMachine.MANUAL;
     }
 
     @Override
     protected void interrupted() {
+        end();
     }
 }
