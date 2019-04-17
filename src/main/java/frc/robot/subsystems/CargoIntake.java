@@ -37,6 +37,10 @@ public class CargoIntake extends Subsystem {
     return cargoIntakeMotor.getMotorOutputPercent();
   }
 
+  public void setMotorDirect(double percent) {
+    cargoIntakeMotor.set(ControlMode.PercentOutput, percent);
+  }
+
   public void setIntakeSpeed(double speed)  {
     cargoIntakeMotor.set(ControlMode.PercentOutput, speed);
   }

@@ -43,7 +43,6 @@ public class Calibrator extends Command {
     public void end() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("/home/lvuser/deploy/testData.txt"));
-            writer.newLine();
             writer.write(Robot.motorValues.get(0).toString());
             writer.newLine();
             writer.write(Robot.motorValues.get(1).toString());
