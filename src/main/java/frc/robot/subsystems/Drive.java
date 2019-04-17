@@ -59,6 +59,8 @@ public class Drive extends PIDSubsystem {
 
     driveRearRightMotor.follow(driveFrontRightMotor);
     driveRearLeftMotor.follow(driveFrontLeftMotor);
+
+    resetNavx();
   }
 
   @Override

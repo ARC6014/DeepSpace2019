@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -57,7 +58,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-    camera.setResolution(320, 240);
+    camera.setVideoMode(VideoMode.PixelFormat.kMJPEG,320, 240,120);
 
     //m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
