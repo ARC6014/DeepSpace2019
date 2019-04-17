@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commandgroups.AutonomousReader;
 import frc.robot.commands.Calibrator;
+import frc.robot.commands.Reader;
 import frc.robot.subsystems.*;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.cscore.UsbCamera;
@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
     camera.setVideoMode(VideoMode.PixelFormat.kMJPEG,320, 240,120);
 
     chooser.addOption("Collect Driving Data", new Calibrator());
-    chooser.addOption("Data-based Drive", new AutonomousReader());
+    chooser.addOption("Data-based Drive", new Reader());
 
     //chooser.setDefaultOption("Default Auto", new ExampleCommand());
     //chooser.addOption("My Auto", new MyAutoCommand());

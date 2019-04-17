@@ -10,19 +10,18 @@ import java.util.ArrayList;
 
 public class Reader extends Command {
     private ArrayList<ArrayList<Double>> motorValues = new ArrayList<ArrayList<Double>>();
-    private int i;
+    private int it;
 
-    public Reader() {}
-
-    @Override
-    public void initialize() {
+    public Reader() {
         requires(Robot.elevator);
         requires(Robot.drive);
         requires(Robot.cargoIntake);
         requires(Robot.cargoIntakeWrist);
+    }
 
-        i = 0;
-
+    @Override
+    public void initialize() {
+        it = 0;
         try {
             BufferedReader reader = new BufferedReader(new FileReader("/home/lvuser/deploy/testData.txt"));
             for(int i = 0; i < 6; i++) {
@@ -45,12 +44,12 @@ public class Reader extends Command {
 
     @Override
     public void execute() {
-        Robot.cargoIntakeWrist.setMotorDirect(motorValues.get(1).get(i));
-        Robot.drive.setLeftMotorDirect(motorValues.get(2).get(i));
-        Robot.drive.setRightMotorDirect(motorValues.get(3).get(i));
-        Robot.cargoIntake.setMotorDirect(motorValues.get(4).get(i));
-        Robot.elevator.setMotorDirect(motorValues.get(5).get(i));
-        i++;
+        Robot.cargoIntakeWrist.setMotorDirect(motorValues.get(1).get(it));
+        Robot.drive.setLeftMotorDirect(motorValues.get(2).get(it));
+        Robot.drive.setRightMotorDirect(motorValues.get(3).get(it));
+        Robot.cargoIntake.setMotorDirect(motorValues.get(4).get(it));
+        Robot.elevator.setMotorDirect(motorValues.get(5).get(it));
+        it++;
     }
 
     @Override
@@ -60,10 +59,11 @@ public class Reader extends Command {
 
     @Override
     public boolean isFinished() {
-        return i == motorValues.get(1).size();
+        return it == motorValues.get(1).size();
     }
 
     @Override
     public void end() {
+
     }
 }
