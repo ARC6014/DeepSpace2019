@@ -183,4 +183,10 @@ public class Drive extends PIDSubsystem {
   public double getRightMotorSet() {
     return driveFrontRightMotor.getMotorOutputPercent();
   }
+  public void setLeftMotorDirect(double percent) {
+    driveFrontLeftMotor.set(ControlMode.PercentOutput, percent);
+  }
+  public void setRightMotorDirect(double percent) {
+    driveFrontRightMotor.set(ControlMode.PercentOutput, percent);
+  }
 }

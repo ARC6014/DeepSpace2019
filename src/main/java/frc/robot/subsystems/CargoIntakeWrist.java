@@ -136,6 +136,10 @@ public class CargoIntakeWrist extends PIDSubsystem {
   public double getMotorSet() {
     return cargoIntakeWristRightMotor.getMotorOutputPercent();
   }
+  public void setMotorDirect(double percent) {
+    cargoIntakeWristRightMotor.set(ControlMode.PercentOutput, percent);
+  }
+
 
   public void setWristSpeed(double speed) {
 

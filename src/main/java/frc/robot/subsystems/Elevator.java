@@ -123,6 +123,9 @@ public class Elevator extends PIDSubsystem {
   public double getMotorSet() {
     return elevatorMotor.getMotorOutputPercent();
   }
+  public void setMotorDirect(double percent) {
+    elevatorMotor.set(ControlMode.PercentOutput, percent);
+  }
 
   public void setElevatorSpeed(double speed) {
     elevatorMotor.set(ControlMode.PercentOutput, speed);
