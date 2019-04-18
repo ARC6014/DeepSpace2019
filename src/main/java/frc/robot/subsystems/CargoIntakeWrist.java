@@ -10,14 +10,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.teleop.PIDIntakeWrist;
-
-import javax.sql.rowset.serial.SerialArray;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
@@ -37,7 +34,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
   private final int encoderCPR = 2048;
   private final double outputRatio = 5.0;
 
-  private static final double wristStallOutput = -0.22;
+  private static final double wristStallOutput = -0.205;
   private static final double armMass = 5;
   private static final double dToCM = 0.325;
   private static final double stallTorque = 0.71;
@@ -62,7 +59,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
     getPIDController().setInputRange(0,maxWristAngle);
     getPIDController().setOutputRange(-1,1);
     setSetpoint(maxWristAngle);
-    cargoIntakeWristRightMotor.setInverted(true);
+    cargoIntakeWristLeftMotor.setInverted(true);
     cargoIntakeWristLeftMotor.follow(cargoIntakeWristRightMotor);
   }
   @Override

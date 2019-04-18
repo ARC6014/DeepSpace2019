@@ -10,45 +10,43 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.CargoIntakeWrist;
 
 
 /**
  * An example command.  You can replace me with your own command.
  */
-public class RotateIntakeWrist extends Command {
-    private double angle;
-    private double startTime;
+public class WaitLiftElevator extends Command {
+    private double height,startTime;
 
-    public RotateIntakeWrist(double angle) {
-        this.angle = angle;
+    public WaitLiftElevator(double height) {
+        requires(Robot.elevator);
+        this.height = height;
     }
 
     @Override
     protected void initialize() {
-        startTime=0;
-        Robot.cargoIntakeWrist.setWristAngle(angle);
-        Robot.cargoIntakeWrist.cargoIntakeWristStateMachine = CargoIntakeWrist.CargoIntakeWristStateMachine.PID;
+            Robot.elevator.setSetpoint(height);
+            startTime=0;
     }
 
     @Override
     protected void execute() {
+        Robot.elevator.PIDLift();
     }
 
     @Override
     protected boolean isFinished() {
-         if (Timer.getFPGATimestamp()-startTime >= 0.2) {
-             return true;
-         }
-         if(!Robot.cargoIntakeWrist.onTarget()) {
-             startTime = Timer.getFPGATimestamp();
-         }
-         return false;
+        if (Timer.getFPGATimestamp()-startTime >= 0.2) {
+            return true;
+        }
+        if(!Robot.elevator.onTarget()) {
+            startTime = Timer.getFPGATimestamp();
+        }
+        return false;
     }
 
     @Override
     protected void end() {
-        Robot.cargoIntakeWrist.cargoIntakeWristStateMachine = CargoIntakeWrist.CargoIntakeWristStateMachine.MANUAL;
     }
 
     @Override

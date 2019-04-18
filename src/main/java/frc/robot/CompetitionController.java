@@ -32,8 +32,8 @@ public class CompetitionController {
     public boolean getCargoIntake() {return xbox.getBumper(rightStick);}
     public boolean getHatchIntake() {return xbox.getTriggerAxis(rightStick) >= 0.5;}
 
-    public boolean getToSetAngle30() {return joystick.getRawButton(6);}
-    public boolean getToSetAngle70() {return joystick.getRawButton(5);}
+    public boolean getToSetAngle30() {return joystick.getRawButton(5);}
+    public boolean getToSetAngle70() {return joystick.getRawButton(6);}
 
     public boolean getTurnToAngle30() {
         return false;
