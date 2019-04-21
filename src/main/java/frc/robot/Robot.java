@@ -60,7 +60,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-    camera.setVideoMode(VideoMode.PixelFormat.kMJPEG,320, 240,120);
+    camera.setVideoMode(VideoMode.PixelFormat.kMJPEG,320, 240,15);
 
     chooser.addOption("Collect Driving Data", new Calibrator());
     chooser.addOption("Data-based Drive", new Reader());

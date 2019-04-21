@@ -26,7 +26,7 @@ public class WaitLiftElevator extends Command {
     @Override
     protected void initialize() {
             Robot.elevator.setSetpoint(height);
-            startTime=0;
+            startTime=Timer.getFPGATimestamp();
     }
 
     @Override
@@ -36,10 +36,10 @@ public class WaitLiftElevator extends Command {
 
     @Override
     protected boolean isFinished() {
-        if (Timer.getFPGATimestamp()-startTime >= 0.2) {
+        if (Timer.getFPGATimestamp()-startTime >= 0.4) {
             return true;
         }
-        if(!Robot.elevator.onTarget()) {
+        if(Robot.elevator.elevatorHeightCm()>60) {
             startTime = Timer.getFPGATimestamp();
         }
         return false;

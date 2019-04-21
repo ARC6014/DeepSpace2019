@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.teleop.PIDIntakeWrist;
 
@@ -35,6 +36,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
   private final double outputRatio = 5.0;
 
   private static final double wristStallOutput = -0.205;
+  private static final double PIDWristStallOutput = -0.22;
   private static final double armMass = 5;
   private static final double dToCM = 0.325;
   private static final double stallTorque = 0.71;
@@ -54,7 +56,7 @@ public class CargoIntakeWrist extends PIDSubsystem {
   public CargoIntakeWristStateMachine cargoIntakeWristStateMachine = CargoIntakeWristStateMachine.MANUAL;
 
   public CargoIntakeWrist() {
-    super(0.14,0,0.65,wristStallOutput * Math.cos(Math.toRadians(maxWristAngle)),0.02);
+    super(0.14,0,0.65,PIDWristStallOutput * Math.cos(Math.toRadians(maxWristAngle)),0.02);
     setAbsoluteTolerance(1);
     getPIDController().setInputRange(0,maxWristAngle);
     getPIDController().setOutputRange(-1,1);
@@ -82,10 +84,12 @@ public class CargoIntakeWrist extends PIDSubsystem {
     SmartDashboard.putBoolean("CargoIntakeWristSwitch", getCargoSwitchStatus());
     SmartDashboard.putNumber("CargoStallSpeed", stallSpeed);
     SmartDashboard.putNumber("CargoStallCalc", Math.cos(Math.toRadians(getWristAngle())));
+    SmartDashboard.putString("CargoWristState", cargoIntakeWristStateMachine.toString());
+    SmartDashboard.putBoolean("PIDStatus", Robot.cargoIntakeWrist.getPIDController().isEnabled());
   }
 
   public void setF() {
-    this.getPIDController().setF(wristStallOutput * Math.cos(Math.toRadians(getWristAngle())));
+    this.getPIDController().setF(PIDWristStallOutput * Math.cos(Math.toRadians(getWristAngle())));
   }
 
   public void resetEncoder() {

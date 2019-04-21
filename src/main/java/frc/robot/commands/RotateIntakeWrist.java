@@ -19,29 +19,34 @@ import frc.robot.subsystems.CargoIntakeWrist;
 public class RotateIntakeWrist extends Command {
     private double angle;
     private double startTime;
+    private double resetTime;
 
     public RotateIntakeWrist(double angle) {
+        requires(Robot.cargoIntakeWrist);
         this.angle = angle;
     }
 
     @Override
     protected void initialize() {
-        startTime=0;
+        startTime=Timer.getFPGATimestamp();
+        resetTime=Timer.getFPGATimestamp();
         Robot.cargoIntakeWrist.setWristAngle(angle);
         Robot.cargoIntakeWrist.cargoIntakeWristStateMachine = CargoIntakeWrist.CargoIntakeWristStateMachine.PID;
+        Robot.cargoIntakeWrist.enable();
     }
 
     @Override
     protected void execute() {
+        Robot.cargoIntakeWrist.PIDRotate();
     }
 
     @Override
     protected boolean isFinished() {
-         if (Timer.getFPGATimestamp()-startTime >= 0.2) {
+         if (Timer.getFPGATimestamp()-startTime >= 0.8 || Timer.getFPGATimestamp()-resetTime >=0.2) {
              return true;
          }
          if(!Robot.cargoIntakeWrist.onTarget()) {
-             startTime = Timer.getFPGATimestamp();
+             resetTime = Timer.getFPGATimestamp();
          }
          return false;
     }
@@ -49,6 +54,7 @@ public class RotateIntakeWrist extends Command {
     @Override
     protected void end() {
         Robot.cargoIntakeWrist.cargoIntakeWristStateMachine = CargoIntakeWrist.CargoIntakeWristStateMachine.MANUAL;
+        Robot.cargoIntakeWrist.disable();
     }
 
     @Override

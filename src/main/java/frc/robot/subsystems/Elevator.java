@@ -47,10 +47,10 @@ public class Elevator extends PIDSubsystem {
 
 
   public Elevator() {
-    super(0.04,0,0.02,0.2,0.02);
+    super(0.03,0,0.06,0.22,0.02);
     setAbsoluteTolerance(1);
-    getPIDController().setInputRange(baseToIntakeHeight - 1.2,maxHeight);
-    getPIDController().setOutputRange(-1,1);
+    getPIDController().setInputRange(baseToIntakeHeight,maxHeight);
+    getPIDController().setOutputRange(-0.8,0.8);
     elevatorMotor.setInverted(true);
     setSetpoint(baseToIntakeHeight);
     elevatorEncoder.setReverseDirection(true);
@@ -67,11 +67,15 @@ public class Elevator extends PIDSubsystem {
   public void periodic() {
     if (getElevatorSwitchStatus()){
       resetEncoder();
+      if(getSetpoint()<baseToIntakeHeight+10) {
+        setSetpoint(baseToIntakeHeight);
+      }
     }
     SmartDashboard.putNumber("Elevator Setpoint", getSetpoint());
     SmartDashboard.putBoolean("ElevatorBottomSwitch", getElevatorSwitchStatus());
     SmartDashboard.putNumber("ElevatorHeight", elevatorHeightCm());
     SmartDashboard.putNumber("ElevatorMotor",elevatorMotor.getMotorOutputPercent());
+    SmartDashboard.putString("ElevatorState", elevatorStateMachine.toString());
   }
 
   public void resetEncoder() {
@@ -105,18 +109,7 @@ public class Elevator extends PIDSubsystem {
   }
 
   public void setElevatorSpeedManual(double speed) {
-    double elevatorConstantSpeed = 0.16;
-
-    speed = elevatorConstantSpeed + (1-elevatorConstantSpeed)*speed;
-
-    if (speed < 0 ) {
-      speed = speed * 0.7;
-      elevatorMotor.set(ControlMode.PercentOutput, speed);
-    } else if (getSetpoint() == baseToIntakeHeight + 2 && speed > 0.08) {
-      elevatorMotor.set(ControlMode.PercentOutput, 0);
-    } else {
-      elevatorMotor.set(ControlMode.PercentOutput, speed);
-    }
+    elevatorMotor.set(ControlMode.PercentOutput,speed);
   }
 
   public double getMotorSet() {
@@ -127,22 +120,16 @@ public class Elevator extends PIDSubsystem {
   }
 
   public void setElevatorSpeed(double speed) {
-    elevatorMotor.set(ControlMode.PercentOutput, speed);
-    /*
-    if (speed < elevatorConstantSpeed && elevatorHeightCm() < baseToIntakeHeight + 5) {
+    /*if (speed < 0.2 && elevatorHeightCm() < baseToIntakeHeight + 10) {
       elevatorMotor.set(ControlMode.PercentOutput, (elevatorHeightCm() - baseToIntakeHeight)/5 * speed);
     } else {
       elevatorMotor.set(ControlMode.PercentOutput, speed);
-    }
-    */
-    /*if (speed < 0 && elevatorHeightCm() < baseToIntakeHeight + 15) {
-      elevatorMotor.set(ControlMode.PercentOutput, (elevatorHeightCm() - baseToIntakeHeight)/10 * speed);
-    } else if (speed > 0 && elevatorHeightCm() > maxHeight - 15) {
-      elevatorMotor.set(ControlMode.PercentOutput, (maxHeight - elevatorHeightCm())/10 * speed);
+    }*/
+    if (speed < 0 && elevatorHeightCm() < baseToIntakeHeight + 30) {
+      elevatorMotor.set(ControlMode.PercentOutput, 0);
     } else {
       elevatorMotor.set(ControlMode.PercentOutput, speed);
     }
-    */
   }
 
 

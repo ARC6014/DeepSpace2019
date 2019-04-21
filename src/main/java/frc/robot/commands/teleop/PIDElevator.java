@@ -105,11 +105,20 @@ public class PIDElevator extends Command {
                     (new GetHatchPlace()).start();
                 }
                 Robot.elevatorActive = true;
-            } else {
+
+            } else if (Robot.competitionController.getHatch1Xbox()) {
+                if(!Robot.elevatorActive){
+                    (new Hatch1Xbox()).start();
+                }
+                Robot.elevatorActive = true;
+            }
+            else {
                 Robot.elevatorActive = false;
             }
+
             Robot.elevator.PIDLift();
         }
+
         else if (Robot.elevator.elevatorStateMachine == Elevator.ElevatorStateMachine.MANUAL) {
             Robot.elevator.setElevatorSpeedManual(Robot.competitionController.getCargoIntakeWrist());
         }

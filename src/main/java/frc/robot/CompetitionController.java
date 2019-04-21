@@ -16,6 +16,7 @@ public class CompetitionController {
 
     public boolean getIntakeCargoShipLevel() {return xbox.getAButton();}
     public boolean getIntakeLowestLevel() {return xbox.getBButton();}
+    public boolean getHatch1Xbox() {return xbox.getXButton();}
 
     public boolean getIntakeCargo1RocketLevel(){return joystick.getRawButton(11);}
     public boolean getIntakeHatch1RocketLevel(){return joystick.getRawButton(12);}

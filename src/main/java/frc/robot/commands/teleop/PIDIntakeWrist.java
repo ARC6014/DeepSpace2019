@@ -9,6 +9,7 @@ package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.commands.RotateIntakeWrist;
 import frc.robot.subsystems.CargoIntakeWrist;
 
 
@@ -41,9 +42,9 @@ public class PIDIntakeWrist extends Command {
         }
 
         if (Robot.competitionController.getToSetAngle30()) {
-            Robot.cargoIntakeWrist.setWristAngle(30);
+            (new RotateIntakeWrist(30)).start();
         } else if (Robot.competitionController.getToSetAngle70()) {
-            Robot.cargoIntakeWrist.setWristAngle(70);
+            (new RotateIntakeWrist(70)).start();
         }
 
         if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine == CargoIntakeWrist.CargoIntakeWristStateMachine.PID ){
@@ -58,7 +59,7 @@ public class PIDIntakeWrist extends Command {
             //Robot.elevator.setElevatorSpeed (Robot.competitionController.getCargoIntakeWrist());
         }
         else if (Robot.cargoIntakeWrist.cargoIntakeWristStateMachine== CargoIntakeWrist.CargoIntakeWristStateMachine.MANUAL){
-            Robot.cargoIntakeWrist.setWristSpeed(Robot.competitionController.getCargoIntakeWrist() * 0.7);
+            Robot.cargoIntakeWrist.setWristSpeed(Robot.competitionController.getCargoIntakeWrist() * 0.75);
         }
     }
 
