@@ -1,4 +1,4 @@
-package frc.robot.subsystems.BaseClasses;
+package frc.robot.subsystems.baseclasses;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
