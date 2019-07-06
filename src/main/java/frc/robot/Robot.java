@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
   public static ManualController manualControl = new ManualController();
   public static CompetitionController competitionController = new CompetitionController();
   public static Pathfinding pathfinding = new Pathfinding();
+  public static MotionMagicElevator motionMagicElevator= new MotionMagicElevator();
 
   public static final double robotFrontalWidth = 0.615909;
   public static final double maxV = 0.0; //TODO: SET MAX VELOCITY
