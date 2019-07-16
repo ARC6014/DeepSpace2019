@@ -15,10 +15,15 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import frc.robot.commands.motionmagic.CalibrateElevator;
 import frc.robot.commands.teleop.MotionMagicLift;
 
 class ElevatorConst {
@@ -28,6 +33,8 @@ class ElevatorConst {
     public static final int NO_WAIT = 0;
     public static final double PEAK_OUTPUT = 0.8;
     public static final double CALIBRATION_SPEED = 0.20;
+    public static final int CAN_Status_Frame_13_Period = 20;
+    public static final int CAN_Status_Frame_10_Period = 20;
 
     //Gearbox & Elevator Constants
     public static final double BASE_TO_INTAKE_HEIGHT = 41.5;
@@ -44,10 +51,10 @@ class ElevatorConst {
     //https://phoenix-documentation.readthedocs.io/en/latest/ch14_MCSensor.html
 
     //PID Constants
-    public static final double PROPORTIONAL = 0;
+    public static final double PROPORTIONAL = 0.03;
     public static final double INTEGRAL = 0;
-    public static final double DERIVATIVE = 0;
-    public static final double FEED_FORWARD = 0;
+    public static final double DERIVATIVE = 0.06;
+    public static final double FEED_FORWARD = 0.22;
 
     //Tolerance
     public static final double TOLERANCE = 3;
@@ -62,6 +69,7 @@ public class MotionMagicElevator extends Subsystem {
 
     boolean calibrated;
     double tolerance;
+    double setPoint;
 
     public enum MotionMagicStateMachine{
         DISABLED,
@@ -78,7 +86,7 @@ public class MotionMagicElevator extends Subsystem {
         setPIDConstants(ElevatorConst.PROPORTIONAL, ElevatorConst.INTEGRAL, ElevatorConst.DERIVATIVE, ElevatorConst.FEED_FORWARD);
         setAbsoluteTolerance(ElevatorConst.TOLERANCE);
         //elevatorMotor.setSensorPhase(true);
-        //elevatorMotor.setInverted(true);
+        elevatorMotor.setInverted(true);
 
         elevatorMotor.configForwardSoftLimitEnable(false, ElevatorConst.NO_WAIT); //False until after calibration
         elevatorMotor.configReverseSoftLimitEnable(false, ElevatorConst.NO_WAIT);
@@ -92,6 +100,11 @@ public class MotionMagicElevator extends Subsystem {
 
         elevatorMotor.configMotionCruiseVelocity(ElevatorConst.VELOCITY_LIMIT, ElevatorConst.CAN_TIMEOUT);
         elevatorMotor.configMotionAcceleration(ElevatorConst.ACCEL_LIMIT, ElevatorConst.CAN_TIMEOUT);
+
+        elevatorMotor.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, ElevatorConst.CAN_Status_Frame_13_Period, ElevatorConst.CAN_TIMEOUT);
+        elevatorMotor.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, ElevatorConst.CAN_Status_Frame_10_Period, ElevatorConst.CAN_TIMEOUT);
+
+        this.setPoint = 0;
     }
 
     @Override
@@ -119,6 +132,7 @@ public class MotionMagicElevator extends Subsystem {
         SmartDashboard.putNumber("ElevatorVelocity",getVelocity());
     }
 
+
     //
     //Configuration Commands
     //
@@ -136,29 +150,55 @@ public class MotionMagicElevator extends Subsystem {
         this.tolerance = tolerance;
     }
 
+
     //
     //Movement Commands
     //
 
+    public void AutoElevator() {
+        elevatorMotor.set(ControlMode.MotionMagic, this.setPoint);
+    }
+
     public void setSetPoint(double setPoint) {
-        if (setPoint < ElevatorConst.BASE_TO_INTAKE_HEIGHT) {
-            elevatorMotor.set(ControlMode.MotionMagic, 0);
+        if(calibrated) {
+            if (setPoint < ElevatorConst.BASE_TO_INTAKE_HEIGHT) {
+                this.setPoint = 0;
+            }
+            else if (setPoint > ElevatorConst.MAX_ELEVATOR_HEIGHT) {
+                this.setPoint = cmToTicks(ElevatorConst.MAX_ELEVATOR_HEIGHT - ElevatorConst.BASE_TO_INTAKE_HEIGHT);
+            }
+            else {
+                this.setPoint = cmToTicks(setPoint - ElevatorConst.BASE_TO_INTAKE_HEIGHT);
+            }
+        } else {
+            Scheduler.getInstance().add(new CalibrateElevator());
         }
-        else if (setPoint > ElevatorConst.MAX_ELEVATOR_HEIGHT) {
-            elevatorMotor.set(ControlMode.MotionMagic, cmToTicks(ElevatorConst.MAX_ELEVATOR_HEIGHT - ElevatorConst.BASE_TO_INTAKE_HEIGHT));
+    }
+
+    public void manualControl(double speed) {
+        if(calibrated) {
+            if (speed < 0 && getElevatorHeight() < ElevatorConst.BASE_TO_INTAKE_HEIGHT + 30) {
+                elevatorMotor.set(ControlMode.MotionProfile, elevatorMotor.getSelectedSensorPosition());
+            }
+            else if(speed < 0.1 && speed > -0.1 ) {
+                elevatorMotor.set(ControlMode.MotionProfile, elevatorMotor.getSelectedSensorPosition());
+            }
+            else {
+                elevatorMotor.set(ControlMode.PercentOutput, speed);
+            }
+        } else {
+            Scheduler.getInstance().add(new CalibrateElevator());
         }
-        else {
-            elevatorMotor.set(ControlMode.MotionMagic, cmToTicks(setPoint - ElevatorConst.BASE_TO_INTAKE_HEIGHT));
-        }
+    }
+
+    public void holdElevator() {
+        elevatorMotor.set(ControlMode.MotionMagic, elevatorMotor.getSelectedSensorPosition(0));
     }
 
     public void calibrationMovement() {
         elevatorMotor.set(ControlMode.PercentOutput, ElevatorConst.CALIBRATION_SPEED);
     }
 
-    public void setUncalibrated() {
-        this.calibrated = false;
-    }
 
     //
     //Helper Commands
@@ -166,6 +206,10 @@ public class MotionMagicElevator extends Subsystem {
 
     public double getSetPoint() {
         return ticksToCm(elevatorMotor.getClosedLoopTarget(0));
+    }
+
+    public double getSetPointHeight() {
+        return ticksToCm(elevatorMotor.getClosedLoopTarget(0)) + ElevatorConst.BASE_TO_INTAKE_HEIGHT;
     }
 
     public double getVelocity() {
@@ -184,6 +228,10 @@ public class MotionMagicElevator extends Subsystem {
 
     public boolean getElevatorSwitchStatus() {
         return !elevatorSwitch.get();
+    }
+
+    public void setUncalibrated() {
+        this.calibrated = false;
     }
 
     public boolean getCalibrated() {
@@ -206,5 +254,4 @@ public class MotionMagicElevator extends Subsystem {
     public double cmToTicks(double cm) {
         return cm / (ElevatorConst.SPROCKET_TEETH * ElevatorConst.CHAIN_PITCH * 2) * ElevatorConst.OUTPUT_RATIO;
     }
-
 }
