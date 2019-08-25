@@ -1,4 +1,4 @@
-package frc.robot.subsystems.baseclasses;
+package frc.robot.library.baseclasses;
 
 import edu.wpi.first.wpilibj.Encoder;
 

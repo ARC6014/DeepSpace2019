@@ -2,8 +2,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.baseclasses.DrivePIDBase;
-import frc.robot.subsystems.baseclasses.EncoderBase;
+import frc.robot.library.baseclasses.DrivePIDBase;
+import frc.robot.library.baseclasses.EncoderBase;
 
 public class ExamplePIDDrive extends DrivePIDBase {
     //Constants
